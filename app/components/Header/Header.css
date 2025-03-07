@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    background: #f6f6f6;
+    padding: 40px 32px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.sub-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #419726;
+    margin-right: 20px;
+}
+
+.hamburger {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-overlay.open {
+    transform: translateX(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-menu ul,
+.desktop-nav-links ul {
+    list-style: none;
+    text-align: center;
+}
+
+.desktop-nav-links ul {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu li {
+    margin: 20px 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #007bff;
+}
+
+.desktop-nav-links {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
+    }
+
+    .desktop-nav-links {
+        display: block;
+        margin: auto;
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .desktop-nav-links ul {
+        display: flex;
+        flex-direction: row;
+        max-width: 550px;
+        margin: auto;
+        justify-content: space-between;
+    }
+
+    .desktop-nav-links li {
+        color: #7b7b7b;
+    }
+
+    .desktop-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    
+
+    .login-btn {
+        border: 1px solid #aeaeae;
+        background: none;
+    }
+
+    .register-btn {
+        border: none;
+        background: #419726;
+        color: #ffffff;
+    }
+
+    .menu-overlay {
+        display: none;
+    }
+
+    .nav-menu {
+        display: flex;
+    }
+
+    .nav-menu ul {
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-menu li {
+        margin: 0;
+    }
+
+    .nav-menu a {
+        font-size: 1.2rem;
+        color: #333;
+    }
+}

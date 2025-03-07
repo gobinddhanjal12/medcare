@@ -40,3 +40,13 @@ a {
     color-scheme: dark;
   }
 }
+
+.container{
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  min-width: 100px;
+  border: none;
+}
