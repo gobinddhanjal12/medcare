@@ -31,7 +31,6 @@
 }
 
 .hamburger {
-    font-size: 2rem;
     background: none;
     border: none;
     cursor: pointer;
@@ -44,7 +43,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.553);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,9 +60,9 @@
 
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 2rem;
+    top: 32px;
+    right: 32px;
+    font-weight: 500;
     background: none;
     border: none;
     color: white;
@@ -80,26 +81,25 @@
 }
 
 .nav-menu li {
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .nav-menu a {
     text-decoration: none;
     color: white;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: large;
     transition: color 0.3s ease;
 }
 
 .nav-menu a:hover {
-    color: #007bff;
+    /* color: #007bff; */
 }
 
 .desktop-nav-links {
     display: none;
 }
 
-.desktop-buttons{
+.desktop-buttons {
     display: none;
 }
 
@@ -108,12 +108,12 @@
         display: none;
     }
 
-    .header{
+    .header {
         padding-left: 60px;
         padding-right: 60px;
     }
 
-    .desktop-buttons{
+    .desktop-buttons {
         display: flex;
     }
 
@@ -143,7 +143,7 @@
         justify-content: space-between;
     }
 
-    
+
 
     .login-btn {
         border: 1px solid #aeaeae !important;
