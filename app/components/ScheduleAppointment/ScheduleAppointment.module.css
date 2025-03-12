@@ -1,0 +1,283 @@
+.container {
+    padding: 20px;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 20px !important;
+}
+
+
+.title {
+    font-size: 24px;
+    font-weight: 400;
+    display: inline-block;
+}
+
+.bookButton {
+    background-color: #1f5221;
+    color: white;
+    padding: 10px 24px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.tabContainer {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.activeTab {
+    background-color: #1f5221;
+    color: white;
+}
+
+.dropdown {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.dateHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dateSelector {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+.dateButton {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #f5f5f5;
+}
+
+.activeDate {
+    background-color: #1f5221;
+    color: white;
+}
+
+.slotSection {
+    margin-top: 20px;
+    box-shadow: 1px 1px 10px #00000011;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.slotTitle {
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.slotCount {
+    font-size: 12px;
+    margin-left: auto;
+    background: #dcdcdc;
+    border-radius: 20px;
+    padding: 4px 12px;
+}
+
+.slotHr{
+    border: none;
+    background: #e3e3e3;
+    padding: 1px;
+    margin: 20px auto;
+}
+
+.slotGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.slotButton {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.selectedSlot {
+    background-color: #1f5221;
+    color: white;
+}
+
+.disabledSlot {
+    background: #ddd;
+    color: gray;
+    cursor: not-allowed;
+}
+
+.nextButton {
+    width: 100%;
+    background-color: #1f5221;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+
+
+
+.dropdownWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    appearance: none;
+    cursor: pointer;
+}
+
+.dropdownWrapper .icon {
+    position: absolute;
+    top: 60%;
+    right: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+}
+
+.dateHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 20px;
+}
+
+.dateButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: 2px;
+    padding: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dateButton:hover {
+    transform: scale(1.1);
+}
+
+.dateHeader .heading {
+    text-align: center;
+}
+
+.dateHeader .icon {
+    color: #333;
+}
+
+.dateSelectorWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.dateSelector {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.dateSelector::-webkit-scrollbar {
+    display: none;
+}
+
+.dateSelector .dateButton {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 65px;
+}
+
+.dateSelector .dateButton:hover {
+    background: #ddd;
+}
+
+.dateSelector .activeDate {
+    background: #1f5434;
+    color: white;
+    border: 1px solid #1f5434;
+}
+
+.day {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.date {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.scrollButton {
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    padding: 20px 16px;
+
+}

@@ -41,12 +41,26 @@ a {
   }
 }
 
-.container{
-}
+.container {}
 
+button{
+  font-family: inherit;
+}
 .btn {
   padding: 10px 20px;
   border-radius: 8px;
   min-width: 100px;
   border: none;
+}
+
+.heading {
+  line-height: 1.2;
+  font-size: 60px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.para {
+  line-height: 1.6;
+  font-weight: 400;
 }

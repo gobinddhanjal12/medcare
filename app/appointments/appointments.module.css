@@ -1,4 +1,4 @@
-.home {
+.appointments {
     display: flex;
     flex-direction: column;
 
@@ -7,7 +7,7 @@
 .left,
 .right {
     flex: 1;
-    overflow: hidden;
+    /* overflow: hidden; */
     min-height: 80vh;
 
 }
@@ -20,21 +20,15 @@
     padding: 20px;
 }
 
-h1 {
-    font-size: 80px;
-    font-weight: 500;
-}
+
 
 .left .btn {
     margin-top: 50px;
 }
 
-.right {
-    position: relative;
-}
 
 @media (min-width: 768px) {
-    .home {
+    .appointments {
         flex-direction: row;
     }
 
