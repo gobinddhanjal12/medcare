@@ -13,6 +13,7 @@ const SearchBar = () => {
             />
             <button className={styles.button}>Search</button>
         </div>
+
     );
 };
 

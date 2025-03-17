@@ -6,7 +6,7 @@
 
 .left,
 .right {
-    flex: 1;
+    flex: 50%;
     overflow: hidden;
     min-height: 80vh;
 

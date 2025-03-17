@@ -1,24 +1,26 @@
-import Image from "next/image";
-import styles from "./appointments.module.css";
-import ScheduleAppointment from "../components/ScheduleAppointment/ScheduleAppointment";
+'use client';
 
-const Appointments = () => {
+import styles from './doctorList.module.css';
+import SearchBar from '../components/SearchBar/SearchBar';
+import DoctorList from '../components/DoctorList/DoctorList';
+import Footer from '../components/Footer/Footer';
+
+export default function AvailableDoctors() {
+
     return (
-        <div className={styles.appointments}>
-            <div className={styles.left}>
-                <h1 className="heading">
-                    Book Your Next Doctor Visit in Seconds.
-                </h1>
-                <p className="para">CareMate helps you find the best healthcare provider by specialty,
-                    location, and more, ensuring you get the care you need.</p>
+        <div>
+
+            <div className={styles.search}>
+                <h1 className={styles.title}>Find a doctor at your own ease</h1>
+                <SearchBar />
+            </div>
+            <div className={styles.container}>
+                <DoctorList />
 
             </div>
-            <div className={styles.right}>
-                <ScheduleAppointment />
-            </div>
+
+            <Footer />
+
         </div>
-
     );
 }
-
-export default Appointments;

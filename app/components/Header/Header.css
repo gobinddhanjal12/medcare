@@ -28,6 +28,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 }
 
 .hamburger {
@@ -75,6 +76,18 @@
     text-align: center;
 }
 
+.login-btn {
+    border: 1px solid #ffffff !important;
+    background: none;
+    color: #ffffff;
+}
+
+.register-btn {
+    border: none;
+    background: #1c4a2a;
+    color: #ffffff;
+}
+
 .desktop-nav-links ul {
     display: flex;
     gap: 20px;
@@ -91,9 +104,6 @@
     transition: color 0.3s ease;
 }
 
-.nav-menu a:hover {
-    /* color: #007bff; */
-}
 
 .desktop-nav-links {
     display: none;
@@ -103,7 +113,7 @@
     display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .hamburger {
         display: none;
     }
@@ -121,15 +131,13 @@
         display: block;
         margin: auto;
         width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
     }
 
     .desktop-nav-links ul {
         display: flex;
         flex-direction: row;
-        gap: 40px;
-        margin: auto;
+        max-width: 500px;
+        justify-content: space-around;
     }
 
     .desktop-nav-links li {
@@ -148,6 +156,7 @@
     .login-btn {
         border: 1px solid #aeaeae !important;
         background: none;
+        color: #0f0f0f;
     }
 
     .register-btn {

@@ -6,6 +6,8 @@
     background: url("/images/login-img.png") center/cover no-repeat;
 }
 
+
+
 .card {
     background: rgba(255, 255, 255, 0.2);
     padding: 20px;
@@ -74,6 +76,14 @@
 .icon {
     position: absolute;
     left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+.eyeIcon {
+    position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: gray;

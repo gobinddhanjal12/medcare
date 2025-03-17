@@ -43,14 +43,16 @@ a {
 
 .container {}
 
-button{
+button {
   font-family: inherit;
 }
+
 .btn {
   padding: 10px 20px;
   border-radius: 8px;
   min-width: 100px;
   border: none;
+  cursor: pointer;
 }
 
 .heading {

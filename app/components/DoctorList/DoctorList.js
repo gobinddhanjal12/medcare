@@ -8,7 +8,7 @@ const DoctorList = () => {
         <div className={styles.container}>
             <h1 className={styles.title}>6 doctors available</h1>
             <p className={styles.para}>Book appointments with minimum wait-time & verified doctor details</p>
-            <br />
+
             <div className={styles.subContainer}>
                 <div className={styles.left}>
                     <Filter />

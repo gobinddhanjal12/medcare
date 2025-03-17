@@ -4,7 +4,7 @@
     gap: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #fdfdfd;
     overflow: hidden;
 }
@@ -23,6 +23,7 @@
     font-size: 16px;
     color: #374151;
     background: transparent;
+    width: 100%;
 }
 
 .input:focus {
@@ -41,4 +42,10 @@
 
 .button:hover {
     background-color: #2563eb;
+}
+
+@media (min-width:768px) {
+    .searchBar {
+        margin: auto 8%;
+    }
 }

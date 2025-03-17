@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import styles from "./ScheduleAppointment.module.css";
 import { ChevronDown, ChevronLeft, ChevronRight, CircleChevronLeft, CircleChevronRight, Sun, Sunset } from "lucide-react";
+import DateSelector from "../DateSelector/DateSelector";
 
 const ScheduleAppointment = () => {
 
@@ -93,7 +94,7 @@ const ScheduleAppointment = () => {
                 </button>
             </div>
 
-            <div className={styles.dateSelectorWrapper}>
+            {/* <div className={styles.dateSelectorWrapper}>
                 <div className={styles.dateSelector} ref={scrollContainerRef}>
                     {dates.map((item) => (
                         <button
@@ -106,10 +107,18 @@ const ScheduleAppointment = () => {
                         </button>
                     ))}
                 </div>
+
                 <button className={styles.scrollButton} onClick={scrollRight}>
                     <CircleChevronRight size={28} />
                 </button>
-            </div>
+            </div> */}
+
+            <DateSelector
+                dates={dates}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                scrollRight={scrollRight}
+            />
 
 
             <div className={styles.slotSection}>
