@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .header {
     background: #f6f6f6;
     padding: 40px 24px;
@@ -12,7 +6,7 @@
     z-index: 10;
 }
 
-.sub-container {
+.subContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,10 +15,9 @@
 
 .logo {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 500;
     color: #1c4a2a;
     margin-right: 20px;
-    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -38,7 +31,7 @@
     display: block;
 }
 
-.menu-overlay {
+.menuOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -55,61 +48,59 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.menu-overlay.open {
+.menuOpen {
     transform: translateX(0);
 }
 
-.close-btn {
+.closeBtn {
     position: absolute;
     top: 32px;
     right: 32px;
-    font-weight: 500;
     background: none;
     border: none;
     color: white;
     cursor: pointer;
 }
 
-.nav-menu ul,
-.desktop-nav-links ul {
+.navMenu ul,
+.desktopNavLinks ul {
     list-style: none;
     text-align: center;
 }
 
-.login-btn {
+.loginBtn {
     border: 1px solid #ffffff !important;
     background: none;
     color: #ffffff;
 }
 
-.register-btn {
+.registerBtn {
     border: none;
     background: #1c4a2a;
     color: #ffffff;
 }
 
-.desktop-nav-links ul {
+.desktopNavLinks ul {
     display: flex;
     gap: 20px;
 }
 
-.nav-menu li {
+.navMenu li {
     margin: 40px 0;
 }
 
-.nav-menu a {
+.navMenu a {
     text-decoration: none;
     color: white;
     font-size: large;
     transition: color 0.3s ease;
 }
 
-
-.desktop-nav-links {
+.desktopNavLinks {
     display: none;
 }
 
-.desktop-buttons {
+.desktopButtons {
     display: none;
 }
 
@@ -123,66 +114,64 @@
         padding-right: 60px;
     }
 
-    .desktop-buttons {
+    .desktopButtons {
         display: flex;
     }
 
-    .desktop-nav-links {
+    .desktopNavLinks {
         display: block;
         margin: auto;
         width: 100%;
     }
 
-    .desktop-nav-links ul {
+    .desktopNavLinks ul {
         display: flex;
         flex-direction: row;
         max-width: 500px;
         justify-content: space-around;
     }
 
-    .desktop-nav-links li {
+    .desktopNavLinks li {
         color: #7b7b7b;
     }
 
-    .desktop-buttons {
+    .desktopButtons {
         display: flex;
         flex-direction: row;
         gap: 20px;
         justify-content: space-between;
     }
 
-
-
-    .login-btn {
+    .loginBtn {
         border: 1px solid #aeaeae !important;
         background: none;
         color: #0f0f0f;
     }
 
-    .register-btn {
+    .registerBtn {
         border: none;
         background: #1c4a2a;
         color: #ffffff;
     }
 
-    .menu-overlay {
+    .menuOverlay {
         display: none;
     }
 
-    .nav-menu {
+    .navMenu {
         display: flex;
     }
 
-    .nav-menu ul {
+    .navMenu ul {
         display: flex;
         gap: 20px;
     }
 
-    .nav-menu li {
+    .navMenu li {
         margin: 0;
     }
 
-    .nav-menu a {
+    .navMenu a {
         font-size: 1.2rem;
         color: #333;
     }

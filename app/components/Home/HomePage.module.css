@@ -1,18 +1,12 @@
 .home {
     display: flex;
     flex-direction: column;
-
-}
-
-.left,
-.right {
-    flex: 50%;
-    overflow: hidden;
-    min-height: 80vh;
-
 }
 
 .left {
+    flex: 50%;
+    overflow: hidden;
+    min-height: 80vh;
     background: #1c4a2a;
     align-content: center;
     color: #ffffffdf;
@@ -20,17 +14,24 @@
     padding: 20px;
 }
 
-h1 {
+.title {
     font-size: 80px;
     font-weight: 500;
 }
 
-.left .btn {
+.description {
+    margin-top: 20px;
+}
+
+.button {
     margin-top: 50px;
 }
 
 .right {
+    flex: 50%;
     position: relative;
+    overflow: hidden;
+    min-height: 80vh;
 }
 
 @media (min-width: 768px) {
