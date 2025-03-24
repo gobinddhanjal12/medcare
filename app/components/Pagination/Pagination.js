@@ -1,8 +1,8 @@
 "use client";
-import styles from "./Pagination.module.css";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import styles from "./Pagination.module.css";
 
 const Pagination = ({ totalPages }) => {
   const searchParams = useSearchParams();
@@ -20,21 +20,18 @@ const Pagination = ({ totalPages }) => {
     if (page >= 1 && page <= totalPages) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", page);
-      router.push(`${pathname}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
     }
   };
 
   const renderPageNumbers = () => {
     let pages = [];
-
-    for (let i = 1; i <= Math.min(4, totalPages); i++) {
-      pages.push(i);
-    }
-
-    if (totalPages > 6) {
-      pages.push("...");
-      pages.push(totalPages - 1);
-      pages.push(totalPages);
+    if (totalPages <= 6) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages = [1, 2, 3, "...", totalPages - 1, totalPages];
     }
 
     return pages.map((num, index) => (

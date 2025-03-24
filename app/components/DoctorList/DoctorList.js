@@ -12,12 +12,17 @@ const DoctorList = () => {
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalDoctors, setTotalDoctors] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentPage = Number(searchParams.get("page")) || 1;
+  // Extract the current page from search params safely
+  useEffect(() => {
+    const page = Number(searchParams.get("page")) || 1;
+    setCurrentPage(page);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchDoctors = async () => {

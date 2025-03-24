@@ -1,9 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import styles from "./AppointmentRequest.module.css";
 
-const AppointmentRequest = () => {
+const AppointmentRequestContent = () => {
   const searchParams = useSearchParams();
   const date = searchParams.get("date");
   const time = searchParams.get("time");
@@ -28,6 +29,14 @@ const AppointmentRequest = () => {
         You will receive a confirmation once your appointment is approved.
       </p>
     </div>
+  );
+};
+
+const AppointmentRequest = () => {
+  return (
+    <Suspense fallback={<p>Loading appointment details...</p>}>
+      <AppointmentRequestContent />
+    </Suspense>
   );
 };
 
