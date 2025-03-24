@@ -1,76 +1,84 @@
 .card {
-    width: 250px;
-    line-height: 1.5;
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    background: #f8fcf9;
-    border: 1px solid #0000001f;
+  line-height: 1.5;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  background: #f8fcf9;
+  border: 1px solid #0000001f;
+}
+
+.emptyStar {
+  color: #f39c12;
+  width: 16px;
+  height: 16px;
 }
 
 .profileImage {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
+  margin-top: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .name {
-    margin: 12px 0;
-    font-size: 18px;
-    font-weight: 500;
+  margin: 12px 0;
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .details {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    font-size: 12px;
-    color: #6c757d;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 10px;
 }
 
 .detail {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .icon {
-    width: 14px;
-    height: 14px;
+  width: 14px;
+  height: 14px;
 }
 
 .ratings {
-    margin: 50px auto;
-    font-size: 14px;
-    color: #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
+  margin: 50px auto;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .star {
-    color: #f39c12;
-    width: 16px;
-    height: 16px;
+  fill: #f39c12;
+  color: #f39c12;
+  width: 16px;
+  height: 16px;
 }
 
 .bookButton {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background: transparent;
-    border: 1px solid #00000021;
-    font-size: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    margin-bottom: 20px;
+  width: 100%;
+  padding: 20px 10px;
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid #00000021;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 20px;
 }
 
 .bookButton:hover {
-    background-color: #2e7d32;
-    color: white;
+  background-color: #2e7d32;
+  color: white;
 }

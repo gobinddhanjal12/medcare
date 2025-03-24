@@ -109,3 +109,21 @@
     text-align: center;
     margin-top: 10px;
 }
+
+.error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.success {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.signupbtn:disabled,
+.resetbtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

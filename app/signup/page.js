@@ -2,21 +2,65 @@
 
 import { useState } from "react";
 import styles from "./signup.module.css";
-import { Lock, Mail, User, Phone, UserCheck } from "lucide-react";
+import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
 
 export default function Signup() {
-    const [role, setRole] = useState("");
     const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Role:", role, "Name:", name, "Phone:", phone, "Email:", email, "Password:", password);
+        setError(null);
+        setSuccess(null);
+        setLoading(true);
+
+        const userData = {
+            name,
+            email,
+            password,
+            role: "patient"
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/signup`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setSuccess("Signup successful! Redirecting...");
+                setTimeout(() => {
+                    window.location.href = "/login";
+                }, 2000);
+            } else {
+                setError(data.message || "Signup failed. Please try again.");
+            }
+        } catch (error) {
+            setError("An error occurred. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleReset = () => {
+        setName("");
+        setEmail("");
+        setPassword("");
+        setError(null);
+        setSuccess(null);
     };
 
     return (
@@ -26,8 +70,9 @@ export default function Signup() {
                 <p>
                     Already have an account? <Link href="/login">Login here</Link>
                 </p>
+                {error && <p className={styles.error}>{error}</p>}
+                {success && <p className={styles.success}>{success}</p>}
                 <form onSubmit={handleSubmit}>
-
                     <label>Name</label>
                     <div className={styles.inputContainer}>
                         <User className={styles.icon} size={18} />
@@ -52,7 +97,6 @@ export default function Signup() {
                         />
                     </div>
 
-
                     <label>Password</label>
                     <div className={styles.inputContainer}>
                         <Lock className={styles.icon} size={18} />
@@ -72,9 +116,10 @@ export default function Signup() {
                         </span>
                     </div>
 
-
-                    <button type="submit" className={styles.signupbtn}>Submit</button>
-                    <button type="reset" className={styles.resetbtn}>Reset</button>
+                    <button type="submit" className={styles.signupbtn} disabled={loading}>
+                        {loading ? "Signing Up..." : "Submit"}
+                    </button>
+                    <button type="button" className={styles.resetbtn} onClick={handleReset} disabled={loading}>Reset</button>
                 </form>
             </div>
         </div>
