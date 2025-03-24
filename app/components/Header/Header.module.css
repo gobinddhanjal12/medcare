@@ -31,6 +31,10 @@
   display: block;
 }
 
+.hamburgerIcon {
+  stroke: #1c4a2a;
+}
+
 .menuOverlay {
   position: fixed;
   top: 0;

@@ -44,7 +44,7 @@ const Header = () => {
         </div>
 
         <button className={styles.hamburger} onClick={() => setIsOpen(true)}>
-          <Menu size={36} />
+          <Menu className={styles.hamburgerIcon} size={36} />
         </button>
 
         <div

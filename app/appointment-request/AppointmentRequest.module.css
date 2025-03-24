@@ -1,0 +1,27 @@
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.detail {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.info {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.notice {
+  font-size: 14px;
+  color: #ff9800;
+  margin-top: 20px;
+}

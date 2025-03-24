@@ -41,7 +41,10 @@ a {
   }
 }
 
-.container {}
+.container {
+  background: #ffffff;
+  color: #000000;
+}
 
 button {
   font-family: inherit;
@@ -53,6 +56,7 @@ button {
   min-width: 100px;
   border: none;
   cursor: pointer;
+  background: #ffffff;
 }
 
 .heading {

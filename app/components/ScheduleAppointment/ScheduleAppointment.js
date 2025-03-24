@@ -1,163 +1,211 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import styles from "./ScheduleAppointment.module.css";
-import { ChevronDown, ChevronLeft, ChevronRight, CircleChevronLeft, CircleChevronRight, Sun, Sunset } from "lucide-react";
-import DateSelector from "../DateSelector/DateSelector";
+import {
+  ChevronDown,
+  CircleChevronLeft,
+  CircleChevronRight,
+} from "lucide-react";
+import DateScroller from "../DateScroller/DateScroller";
+import TimeSlotSection from "../TimeSlotSection/TimeSlotSection";
+import { useRouter } from "next/navigation";
 
 const ScheduleAppointment = () => {
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("1");
+  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [morningSlots, setMorningSlots] = useState([]);
+  const [afternoonSlots, setAfternoonSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const [selectedSlot, setSelectedSlot] = useState(null);
+  const fetchTimeSlots = async (doctorId, selectedDate) => {
+    setLoading(true);
+    setError(null);
 
-    const [selectedOption, setSelectedOption] = useState("MedicareHeart Institute, Okhla Road");
+    try {
+      const formattedDate = format(selectedDate, "yyyy-MM-dd");
+      const response = await fetch(
+        `http://localhost:3000/api/v1/appointments/available-slots/${doctorId}?date=${formattedDate}`
+      );
 
-    const [date, setDate] = useState(new Date(2022, 11));
+      if (!response.ok) throw new Error("Failed to fetch slots");
+      const result = await response.json();
 
-    const changeMonth = (offset) => {
-        setDate((prevDate) => {
-            const newDate = new Date(prevDate);
-            newDate.setMonth(prevDate.getMonth() + offset);
-            return newDate;
-        });
-    };
+      const availableSlots = result.data.map((slot) =>
+        slot.start_time.slice(0, 5)
+      );
 
+      const expectedSlots = [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "16:30",
+        "17:00",
+        "17:30",
+      ];
 
-    const timeSlots = [
-        { time: "9:00 AM", available: false },
-        { time: "9:30 AM", available: true },
-        { time: "10:00 AM", available: false },
-        { time: "10:30 AM", available: true },
-        { time: "11:00 AM", available: false },
-        { time: "11:30 AM", available: false },
-        { time: "12:00 AM", available: true },
-        { time: "12:30 PM", available: false },
-    ];
+      const slots = expectedSlots.map((time) => ({
+        time,
+        available: availableSlots.includes(time),
+      }));
 
-    const dates = [
-        { day: "Thu", date: "22 Dec" },
-        { day: "Fri", date: "23 Dec" },
-        { day: "Sat", date: "24 Dec" },
-        { day: "Sun", date: "25 Dec" },
-        { day: "Mon", date: "26 Dec" },
-        { day: "Tue", date: "27 Dec" },
-        { day: "Wed", date: "28 Dec" },
-        { day: "Thu", date: "29 Dec" },
-        { day: "Fri", date: "30 Dec" },
-    ];
+      setMorningSlots(
+        slots.filter((slot) => parseInt(slot.time.split(":")[0]) < 14)
+      );
+      setAfternoonSlots(
+        slots.filter((slot) => parseInt(slot.time.split(":")[0]) >= 14)
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    console.log("Selected Date:", selectedDate);
+    fetchTimeSlots(selectedOption, selectedDate);
+  }, [selectedOption, selectedDate]);
 
-    const [selectedDate, setSelectedDate] = useState(dates[0]);
-    const scrollContainerRef = useRef(null);
+  const generateDatesForMonth = (currentDate) => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    const startDay =
+      today.getMonth() === month && today.getFullYear() === year
+        ? today.getDate()
+        : 1;
+    return Array.from({ length: daysInMonth - startDay + 1 }, (_, i) => {
+      const dateObj = new Date(year, month, startDay + i);
+      return {
+        day: format(dateObj, "EEE"),
+        date: format(dateObj, "MMM dd"),
+      };
+    });
+  };
 
-    const scrollRight = () => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({ left: 100, behavior: "smooth" });
-        }
-    };
+  const changeMonth = (offset) => {
+    setDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setMonth(prevDate.getMonth() + offset);
+      return newDate;
+    });
+  };
 
-    return (
-        <div className={styles.container}>
-            <div className={styles.box}>
-                <h2 className={styles.title}>Schedule Appointment</h2>
+  const dates = generateDatesForMonth(date);
 
-                <button className={styles.bookButton}>Book Appointment</button>
-            </div>
+  const [slotError, setSlotError] = useState("");
 
+  const router = useRouter();
 
-            <div className={styles.tabContainer}>
-                <button className={`${styles.tab} ${styles.activeTab}`}>Book Video Consult</button>
-                <button className={styles.tab}>Book Hospital Visit</button>
-            </div>
+  const handleNext = () => {
+    if (!selectedSlot) {
+      setSlotError("Please select a time slot before proceeding.");
+      return;
+    }
+    setSlotError("");
 
-            <div className={styles.dropdownWrapper}>
-                <select
-                    className={styles.dropdown}
-                    value={selectedOption}
-                    onChange={(e) => setSelectedOption(e.target.value)}
-                >
-                    <option value="MedicareHeart Institute, Okhla Road">MedicareHeart Institute, Okhla Road</option>
-                    <option value="Apollo Hospital, Delhi">Apollo Hospital, Delhi</option>
-                    <option value="Max Healthcare, Gurgaon">Max Healthcare, Gurgaon</option>
-                </select>
-                <ChevronDown className={styles.icon} size={28} />
-            </div>
-
-            <div className={styles.dateHeader}>
-                <button className={styles.dateButton} onClick={() => changeMonth(-1)}>
-                    <CircleChevronLeft size={28} className={styles.icon} />
-                </button>
-                <h3 className={styles.heading}>
-                    {date.toLocaleString("default", { month: "long" })} {date.getFullYear()}
-                </h3>
-                <button className={styles.dateButton} onClick={() => changeMonth(1)}>
-                    <CircleChevronRight size={28} className={styles.icon} />
-                </button>
-            </div>
-
-            {/* <div className={styles.dateSelectorWrapper}>
-                <div className={styles.dateSelector} ref={scrollContainerRef}>
-                    {dates.map((item) => (
-                        <button
-                            key={item.date}
-                            className={`${styles.dateButton} ${selectedDate.date === item.date ? styles.activeDate : ""}`}
-                            onClick={() => setSelectedDate(item)}
-                        >
-                            <span className={styles.day}>{item.day}</span>
-                            <span className={styles.date}>{item.date}</span>
-                        </button>
-                    ))}
-                </div>
-
-                <button className={styles.scrollButton} onClick={scrollRight}>
-                    <CircleChevronRight size={28} />
-                </button>
-            </div> */}
-
-            <DateSelector
-                dates={dates}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                scrollRight={scrollRight}
-            />
-
-
-            <div className={styles.slotSection}>
-                <h3 className={styles.slotTitle}><Sun /> Morning <span className={styles.slotCount}>2 Slots</span></h3>
-                <hr className={styles.slotHr} />
-                <div className={styles.slotGrid}>
-                    {timeSlots.map((slot, index) => (
-                        <button
-                            key={index}
-                            className={`${styles.slotButton} ${!slot.available ? styles.disabledSlot : ""} ${selectedSlot === slot.time ? styles.selectedSlot : ""}`}
-                            disabled={!slot.available}
-                            onClick={() => slot.available && setSelectedSlot(slot.time)}
-                        >
-                            {slot.time}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            <div className={styles.slotSection}>
-                <h3 className={styles.slotTitle}><Sunset /> Afternoon <span className={styles.slotCount}>2 Slots</span></h3>
-                <hr className={styles.slotHr} />
-                <div className={styles.slotGrid}>
-                    {timeSlots.map((slot, index) => (
-                        <button
-                            key={index}
-                            className={`${styles.slotButton} ${!slot.available ? styles.disabledSlot : ""} ${selectedSlot === slot.time ? styles.selectedSlot : ""}`}
-                            disabled={!slot.available}
-                            onClick={() => slot.available && setSelectedSlot(slot.time)}
-                        >
-                            {slot.time}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            <button className={styles.nextButton}>Next</button>
-        </div>
+    router.push(
+      `/appointment-request?date=${format(
+        selectedDate,
+        "yyyy-MM-dd"
+      )}&time=${selectedSlot}&doctorId=${selectedOption}`
     );
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.box}>
+        <h2 className={styles.title}>Schedule Appointment</h2>
+        <button className={styles.bookButton}>Book Appointment</button>
+      </div>
+
+      <div className={styles.tabContainer}>
+        <button className={`${styles.tab} ${styles.activeTab}`}>
+          Book Video Consult
+        </button>
+        <button className={styles.tab}>Book Hospital Visit</button>
+      </div>
+
+      <div className={styles.dropdownWrapper}>
+        <select
+          className={styles.dropdown}
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <option value="1">MedicareHeart Institute, Okhla Road</option>
+          <option value="2">Apollo Hospital, Delhi</option>
+          <option value="3">Max Healthcare, Gurgaon</option>
+        </select>
+        <ChevronDown className={styles.icon} size={28} />
+      </div>
+
+      <div className={styles.dateHeader}>
+        <button
+          className={styles.dateButton}
+          onClick={() => changeMonth(-1)}
+          disabled={date.getMonth() === new Date().getMonth()}
+        >
+          <CircleChevronLeft size={28} className={styles.icon} />
+        </button>
+        <h3 className={styles.heading}>
+          {date.toLocaleString("default", { month: "long" })}{" "}
+          {date.getFullYear()}
+        </h3>
+        <button className={styles.dateButton} onClick={() => changeMonth(1)}>
+          <CircleChevronRight size={28} className={styles.icon} />
+        </button>
+      </div>
+
+      <DateScroller
+        dates={dates}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+
+      {loading && <p className={styles.loading}>Loading slots...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+
+      {!loading && !error && (
+        <>
+          <TimeSlotSection
+            title="Morning"
+            icon="Sun"
+            slots={morningSlots}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
+          <TimeSlotSection
+            title="Afternoon"
+            icon="Sunset"
+            slots={afternoonSlots}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
+        </>
+      )}
+
+      <button className={styles.nextButton} onClick={handleNext}>
+        Next
+      </button>
+      {slotError && <p className={styles.error}>{slotError}</p>}
+    </div>
+  );
 };
 
 export default ScheduleAppointment;

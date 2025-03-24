@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./appointments.module.css";
 import ScheduleAppointment from "../components/ScheduleAppointment/ScheduleAppointment";
 import Footer from "../components/Footer/Footer";
