@@ -1,42 +1,139 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-import styles from "./AppointmentRequest.module.css";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import styles from "./styles.module.css";
 
-const AppointmentRequestContent = () => {
+const AppointmentRequest = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const date = searchParams.get("date");
   const time = searchParams.get("time");
   const doctorId = searchParams.get("doctorId");
+  const timeSlotId = searchParams.get("timeSlotId");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [doctor, setDoctor] = useState(null);
+
+  useEffect(() => {
+    const fetchDoctorDetails = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${doctorId}`
+        );
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Doctor not found");
+
+        setDoctor(result.data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    if (doctorId) {
+      fetchDoctorDetails();
+    }
+  }, [doctorId]);
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token)
+        throw new Error("Authentication token not found. Please log in.");
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            doctor_id: Number(doctorId),
+            appointment_date: date,
+            time_slot_id: Number(timeSlotId),
+            consultation_type: "online",
+            patient_age: 30,
+            patient_gender: "male",
+            health_info: "Fever and cold",
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (!response.ok)
+        throw new Error(result.message || "Failed to book appointment");
+
+      router.push(`/appointment-confirmation?id=${result.data.id}`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Appointment Request Submitted</h1>
-      <p className={styles.detail}>
-        Your request has been submitted and is pending approval.
-      </p>
-      <p className={styles.info}>
-        <strong>Date:</strong> {date}
-      </p>
-      <p className={styles.info}>
-        <strong>Time:</strong> {time}
-      </p>
-      <p className={styles.info}>
-        <strong>Doctor ID:</strong> {doctorId}
-      </p>
-      <p className={styles.notice}>
-        You will receive a confirmation once your appointment is approved.
-      </p>
-    </div>
-  );
-};
+      <div className={styles.subContainer}>
+        <h1 className={styles.title}>Confirm Appointment Request</h1>
+        <p className={styles.detail}>
+          Please review the details before confirming.
+        </p>
 
-const AppointmentRequest = () => {
-  return (
-    <Suspense fallback={<p>Loading appointment details...</p>}>
-      <AppointmentRequestContent />
-    </Suspense>
+        {error && <p className={styles.error}>{error}</p>}
+
+        <div className={styles.appointmentInfo}>
+          <h2 className={styles.sectionTitle}>Doctor Details</h2>
+          {doctor ? (
+            <div className={styles.doctorCard}>
+              <img
+                src={`http://localhost:3000${doctor.photo_path}`}
+                alt={doctor.name}
+                className={styles.doctorImage}
+              />
+              <div className={styles.doctorInfo}>
+                <h3 className={styles.doctorName}>{doctor.name}</h3>
+                <p className={styles.specialty}>{doctor.specialty}</p>
+                <p className={styles.location}>{doctor.location}</p>
+                <p className={styles.experience}>
+                  Experience: {doctor.experience} years
+                </p>
+                <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
+              </div>
+            </div>
+          ) : (
+            <p>Loading doctor details...</p>
+          )}
+        </div>
+
+        <div className={styles.appointmentInfo}>
+          <h2 className={styles.sectionTitle}>Appointment Details</h2>
+          <p className={styles.info}>
+            <strong>Date:</strong> {date}
+          </p>
+          <p className={styles.info}>
+            <strong>Time:</strong> {time}
+          </p>
+          <p className={styles.info}>
+            <strong>Time Slot ID:</strong> {timeSlotId}
+          </p>
+        </div>
+
+        <button
+          className={styles.confirmButton}
+          onClick={handleConfirm}
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Confirm Appointment"}
+        </button>
+      </div>
+    </div>
   );
 };
 

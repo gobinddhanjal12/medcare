@@ -1,12 +1,13 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import DoctorCard from "../Card/DoctorCard";
 import Filter from "../Filter/Filter";
 import Pagination from "../Pagination/Pagination";
 import styles from "./DoctorList.module.css";
 
-const DoctorList = () => {
+const DoctorList = ({ filters }) => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,10 +16,8 @@ const DoctorList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
 
-  // Extract the current page from search params safely
   useEffect(() => {
     const page = Number(searchParams.get("page")) || 1;
     setCurrentPage(page);
@@ -29,9 +28,16 @@ const DoctorList = () => {
       setLoading(true);
       setError(null);
 
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", currentPage);
+
+      if (filters.name) {
+        params.set("name", filters.name);
+      }
+
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors?page=${currentPage}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/filter?${params}`
         );
         const result = await response.json();
 
@@ -50,12 +56,28 @@ const DoctorList = () => {
     };
 
     fetchDoctors();
-  }, [currentPage]);
+  }, [searchParams, currentPage, filters]);
+
+  const handleFilterChange = (filters) => {
+    const params = new URLSearchParams();
+
+    if (filters.rating !== "Show all") {
+      params.set("rating", filters.rating.split(" ")[0]);
+    }
+    if (filters.experience !== "Show all") {
+      params.set("experience", filters.experience.split(" ")[0]);
+    }
+    if (filters.gender !== "Show All") {
+      params.set("gender", filters.gender);
+    }
+
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        {loading ? "Loading doctors..." : `${totalDoctors} doctors available`}{" "}
+        {loading ? "Loading doctors..." : `${totalDoctors} doctors available`}
       </h1>
       <p className={styles.para}>
         Book appointments with minimum wait-time & verified doctor details
@@ -63,7 +85,7 @@ const DoctorList = () => {
 
       <div className={styles.subContainer}>
         <div className={styles.left}>
-          <Filter />
+          <Filter onFilterChange={handleFilterChange} />
         </div>
         <div className={styles.right}>
           {error ? (

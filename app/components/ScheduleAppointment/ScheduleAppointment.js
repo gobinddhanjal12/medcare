@@ -29,7 +29,7 @@ const ScheduleAppointment = ({ doctorId }) => {
     try {
       const formattedDate = format(selectedDate, "yyyy-MM-dd");
       const response = await fetch(
-        `http://localhost:3000/api/v1/appointments/available-slots/${doctorId}?date=${formattedDate}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments/available-slots/${doctorId}?date=${formattedDate}`
       );
 
       if (!response.ok) throw new Error("Failed to fetch slots");
@@ -120,11 +120,17 @@ const ScheduleAppointment = ({ doctorId }) => {
     }
     setSlotError("");
 
+    const selectedDoctorId = doctorId || selectedOption;
+
+    const allSlots = [...morningSlots, ...afternoonSlots];
+    const timeSlotId =
+      allSlots.findIndex((slot) => slot.time === selectedSlot) + 1;
+
     router.push(
       `/appointment-request?date=${format(
         selectedDate,
         "yyyy-MM-dd"
-      )}&time=${selectedSlot}&doctorId=${selectedOption}`
+      )}&time=${selectedSlot}&timeSlotId=${timeSlotId}&doctorId=${selectedDoctorId}`
     );
   };
 

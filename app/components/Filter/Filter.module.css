@@ -32,7 +32,8 @@
 }
 
 .filterLabel {
-    display: block;
+    display: flex;
+    flex-direction: row;
     font-size: 14px;
     margin: 10px 0;
     font-weight: 500;
