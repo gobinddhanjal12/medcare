@@ -1,8 +1,11 @@
+"use client";
 import ScheduleAppointment from "@/app/components/ScheduleAppointment/ScheduleAppointment";
 import styles from "./styles.module.css";
 import Footer from "@/app/components/Footer/Footer";
+import { useParams } from "next/navigation";
 
 const Appointments = () => {
+  const { id } = useParams();
   return (
     <div>
       <div className={styles.appointments}>
@@ -14,7 +17,7 @@ const Appointments = () => {
           </p>
         </div>
         <div className={styles.right}>
-          <ScheduleAppointment />
+          <ScheduleAppointment doctorId={id} />
         </div>
       </div>
       <Footer />

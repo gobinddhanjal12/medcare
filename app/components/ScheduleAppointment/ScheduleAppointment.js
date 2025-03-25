@@ -12,7 +12,7 @@ import DateScroller from "../DateScroller/DateScroller";
 import TimeSlotSection from "../TimeSlotSection/TimeSlotSection";
 import { useRouter } from "next/navigation";
 
-const ScheduleAppointment = () => {
+const ScheduleAppointment = ({ doctorId }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedOption, setSelectedOption] = useState("1");
   const [date, setDate] = useState(new Date());
@@ -78,8 +78,8 @@ const ScheduleAppointment = () => {
 
   useEffect(() => {
     console.log("Selected Date:", selectedDate);
-    fetchTimeSlots(selectedOption, selectedDate);
-  }, [selectedOption, selectedDate]);
+    fetchTimeSlots(doctorId, selectedDate);
+  }, [doctorId, selectedDate]);
 
   const generateDatesForMonth = (currentDate) => {
     const year = currentDate.getFullYear();
@@ -128,6 +128,12 @@ const ScheduleAppointment = () => {
     );
   };
 
+  const [activeTab, setActiveTab] = useState("video");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.box}>
@@ -136,10 +142,22 @@ const ScheduleAppointment = () => {
       </div>
 
       <div className={styles.tabContainer}>
-        <button className={`${styles.tab} ${styles.activeTab}`}>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "video" ? styles.activeTab : ""
+          }`}
+          onClick={() => handleTabClick("video")}
+        >
           Book Video Consult
         </button>
-        <button className={styles.tab}>Book Hospital Visit</button>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "hospital" ? styles.activeTab : ""
+          }`}
+          onClick={() => handleTabClick("hospital")}
+        >
+          Book Hospital Visit
+        </button>
       </div>
 
       <div className={styles.dropdownWrapper}>
