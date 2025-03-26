@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 const AppointmentConfirmation = () => {
@@ -54,6 +54,7 @@ const AppointmentConfirmation = () => {
   }, [appointmentId]);
 
   return (
+    <Suspense fallback={<p>Loading appointment details...</p>}>
     <div className={styles.container}>
       <h1 className={styles.title}>Appointment Confirmation</h1>
 
@@ -109,6 +110,7 @@ const AppointmentConfirmation = () => {
         </div>
       )}
     </div>
+    </Suspense>
   );
 };
 

@@ -1,24 +1,33 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import styles from "./styles.module.css";
 
 const AppointmentRequest = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const date = searchParams.get("date");
-  const time = searchParams.get("time");
-  const doctorId = searchParams.get("doctorId");
-  const timeSlotId = searchParams.get("timeSlotId");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [doctorId, setDoctorId] = useState("");
+  const [timeSlotId, setTimeSlotId] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [doctor, setDoctor] = useState(null);
 
   useEffect(() => {
+    setDate(searchParams.get("date") || "");
+    setTime(searchParams.get("time") || "");
+    setDoctorId(searchParams.get("doctorId") || "");
+    setTimeSlotId(searchParams.get("timeSlotId") || "");
+  }, [searchParams]);
+
+  useEffect(() => {
     const fetchDoctorDetails = async () => {
+      if (!doctorId) return;
+
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${doctorId}`
@@ -32,9 +41,7 @@ const AppointmentRequest = () => {
       }
     };
 
-    if (doctorId) {
-      fetchDoctorDetails();
-    }
+    fetchDoctorDetails();
   }, [doctorId]);
 
   const handleConfirm = async () => {
@@ -79,61 +86,63 @@ const AppointmentRequest = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.subContainer}>
-        <h1 className={styles.title}>Confirm Appointment Request</h1>
-        <p className={styles.detail}>
-          Please review the details before confirming.
-        </p>
+    <Suspense fallback={<p>Loading...</p>}>
+      <div className={styles.container}>
+        <div className={styles.subContainer}>
+          <h1 className={styles.title}>Confirm Appointment Request</h1>
+          <p className={styles.detail}>
+            Please review the details before confirming.
+          </p>
 
-        {error && <p className={styles.error}>{error}</p>}
+          {error && <p className={styles.error}>{error}</p>}
 
-        <div className={styles.appointmentInfo}>
-          <h2 className={styles.sectionTitle}>Doctor Details</h2>
-          {doctor ? (
-            <div className={styles.doctorCard}>
-              <img
-                src={`http://localhost:3000${doctor.photo_path}`}
-                alt={doctor.name}
-                className={styles.doctorImage}
-              />
-              <div className={styles.doctorInfo}>
-                <h3 className={styles.doctorName}>{doctor.name}</h3>
-                <p className={styles.specialty}>{doctor.specialty}</p>
-                <p className={styles.location}>{doctor.location}</p>
-                <p className={styles.experience}>
-                  Experience: {doctor.experience} years
-                </p>
-                <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
+          <div className={styles.appointmentInfo}>
+            <h2 className={styles.sectionTitle}>Doctor Details</h2>
+            {doctor ? (
+              <div className={styles.doctorCard}>
+                <img
+                  src={`http://localhost:3000${doctor.photo_path}`}
+                  alt={doctor.name}
+                  className={styles.doctorImage}
+                />
+                <div className={styles.doctorInfo}>
+                  <h3 className={styles.doctorName}>{doctor.name}</h3>
+                  <p className={styles.specialty}>{doctor.specialty}</p>
+                  <p className={styles.location}>{doctor.location}</p>
+                  <p className={styles.experience}>
+                    Experience: {doctor.experience} years
+                  </p>
+                  <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <p>Loading doctor details...</p>
-          )}
-        </div>
+            ) : (
+              <p>Loading doctor details...</p>
+            )}
+          </div>
 
-        <div className={styles.appointmentInfo}>
-          <h2 className={styles.sectionTitle}>Appointment Details</h2>
-          <p className={styles.info}>
-            <strong>Date:</strong> {date}
-          </p>
-          <p className={styles.info}>
-            <strong>Time:</strong> {time}
-          </p>
-          <p className={styles.info}>
-            <strong>Time Slot ID:</strong> {timeSlotId}
-          </p>
-        </div>
+          <div className={styles.appointmentInfo}>
+            <h2 className={styles.sectionTitle}>Appointment Details</h2>
+            <p className={styles.info}>
+              <strong>Date:</strong> {date}
+            </p>
+            <p className={styles.info}>
+              <strong>Time:</strong> {time}
+            </p>
+            <p className={styles.info}>
+              <strong>Time Slot ID:</strong> {timeSlotId}
+            </p>
+          </div>
 
-        <button
-          className={styles.confirmButton}
-          onClick={handleConfirm}
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Confirm Appointment"}
-        </button>
+          <button
+            className={styles.confirmButton}
+            onClick={handleConfirm}
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Confirm Appointment"}
+          </button>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 
