@@ -2,11 +2,15 @@
 
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
+import { AppointmentCard } from "../components/AppointmentCard/AppointmentCard";
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -20,7 +24,7 @@ const UserAppointments = () => {
         }
 
         const response = await fetch(
-          "http://localhost:3000/api/v1/appointments/patient",
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments/patient?page=${page}&limit=${limit}`,
           {
             method: "GET",
             headers: {
@@ -37,6 +41,7 @@ const UserAppointments = () => {
         }
 
         setAppointments(data.data);
+        setTotalPages(data.pagination.pages);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -45,22 +50,7 @@ const UserAppointments = () => {
     };
 
     fetchAppointments();
-  }, []);
-
-  const formatDate = (dateString) => {
-    const dateObj = new Date(dateString);
-    return `${dateObj.getDate()}-${
-      dateObj.getMonth() + 1
-    }-${dateObj.getFullYear()}`;
-  };
-
-  const formatTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    const hour = parseInt(hours, 10);
-    const amPm = hour >= 12 ? "PM" : "AM";
-    const formattedHour = hour % 12 || 12; // Convert to 12-hour format
-    return `${formattedHour}:${minutes} ${amPm}`;
-  };
+  }, [page]);
 
   return (
     <div className={styles.container}>
@@ -71,34 +61,33 @@ const UserAppointments = () => {
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : appointments.length > 0 ? (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Doctor</th>
-              <th>Specialty</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          <div className={styles.cardContainer}>
             {appointments.map((appointment) => (
-              <tr key={appointment.id}>
-                <td>{appointment.doctor_name}</td>
-                <td>{appointment.specialty}</td>
-                <td>{formatDate(appointment.appointment_date)}</td>
-                <td>{formatTime(appointment.start_time)}</td>
-                <td
-                  className={`${styles.status} ${
-                    styles[appointment.request_status]
-                  }`}
-                >
-                  {appointment.request_status}
-                </td>
-              </tr>
+              <AppointmentCard key={appointment.id} appointment={appointment} />
             ))}
-          </tbody>
-        </table>
+          </div>
+
+          <div className={styles.pagination}>
+            <button
+              className={styles.btn}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+            <span className={styles.pageNumber}>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              className={styles.btn}
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : (
         <p>No appointments found.</p>
       )}

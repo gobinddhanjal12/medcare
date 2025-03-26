@@ -20,6 +20,18 @@ const Header = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(`.${styles.userMenu}`)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -79,6 +91,13 @@ const Header = () => {
                 <>
                   <li className={pathname === "/profile" ? styles.active : ""}>
                     <Link href="/profile">Profile</Link>
+                  </li>
+                  <li
+                    className={
+                      pathname === "/user-appointments" ? styles.active : ""
+                    }
+                  >
+                    <Link href="/user-appointments">My Appointments</Link>
                   </li>
                   <li>
                     <button
@@ -143,15 +162,33 @@ const Header = () => {
           {user ? (
             <div className={styles.userMenu}>
               <div
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDropdownOpen(!isDropdownOpen);
+                }}
                 className={styles.avatar}
               >
                 <User size={24} />
               </div>
               {isDropdownOpen && (
                 <ul className={styles.dropdownMenu}>
-                  <li className={pathname ==="/profile" ? styles.active : ""}>
+                  <li
+                    className={pathname === "/profile" ? styles.active : ""}
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                    }}
+                  >
                     <Link href="/profile">Profile</Link>
+                  </li>
+                  <li
+                    className={
+                      pathname === "/user-appointments" ? styles.active : ""
+                    }
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                    }}
+                  >
+                    <Link href="/user-appointments">My Appointments</Link>
                   </li>
                   <li onClick={handleLogout} className={styles.logoutItem}>
                     Logout
