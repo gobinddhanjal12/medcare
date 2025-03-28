@@ -101,7 +101,7 @@ const AppointmentRequest = () => {
             {doctor ? (
               <div className={styles.doctorCard}>
                 <img
-                  src={`http://localhost:3000${doctor.photo_path}`}
+                  src={doctor.photo_path}
                   alt={doctor.name}
                   className={styles.doctorImage}
                 />

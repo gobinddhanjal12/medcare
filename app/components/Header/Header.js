@@ -77,8 +77,8 @@ const Header = () => {
                   Appointments
                 </Link>
               </li>
-              <li className={pathname === "/services" ? styles.active : ""}>
-                <Link href="/services" onClick={handleCloseMenu}>
+              <li className={pathname === "/health-blog" ? styles.active : ""}>
+                <Link href="/health-blog" onClick={handleCloseMenu}>
                   Health Blog
                 </Link>
               </li>
@@ -149,8 +149,8 @@ const Header = () => {
             <li className={pathname === "/appointments" ? styles.active : ""}>
               <Link href="/appointments">Appointments</Link>
             </li>
-            <li className={pathname === "/services" ? styles.active : ""}>
-              <Link href="/services">Health Blog</Link>
+            <li className={pathname === "/health-blog" ? styles.active : ""}>
+              <Link href="/health-blog">Health Blog</Link>
             </li>
             <li className={pathname === "/reviews" ? styles.active : ""}>
               <Link href="/reviews">Reviews</Link>
