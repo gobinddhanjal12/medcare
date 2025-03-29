@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./doctorList.module.css";
+import styles from "./styles.module.css";
 import SearchBar from "../components/SearchBar/SearchBar";
 import DoctorList from "../components/DoctorList/DoctorList";
 import { Suspense } from "react";

@@ -1,8 +1,8 @@
 import Image from "next/image";
-import styles from "./ReviewCard.module.css";
+import styles from "./DoctorReviewCard.module.css";
 import { Star, StarHalf, Star as StarOutline } from "lucide-react";
 
-const ReviewCard = ({ review }) => {
+const DoctorReviewCard = ({ review }) => {
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -17,11 +17,20 @@ const ReviewCard = ({ review }) => {
     return stars;
   };
 
-
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "?");
 
   return (
     <li className={styles.reviewCard}>
+      <div className={styles.doctorDetails}>
+        <Image
+          src={review.doctor_photo}
+          width={100}
+          height={100}
+          alt="doctor"
+          className={styles.doctorImage}
+        />
+        <p className={styles.doctorName}>{review.doctor_name}</p>
+      </div>
       <p className={styles.stars}>
         <span className={styles.starContainer}>
           {renderStars(review.rating)}
@@ -62,4 +71,4 @@ const ReviewCard = ({ review }) => {
   );
 };
 
-export default ReviewCard;
+export default DoctorReviewCard;

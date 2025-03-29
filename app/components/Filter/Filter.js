@@ -1,27 +1,80 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./Filter.module.css";
 
+const ratingOptions = [
+  { label: "Show all", value: null },
+  { label: "1 star", value: 1 },
+  { label: "2 stars", value: 2 },
+  { label: "3 stars", value: 3 },
+  { label: "4 stars", value: 4 },
+  { label: "5 stars", value: 5 },
+];
+
+const experienceOptions = [
+  { label: "Show all", value: null },
+  { label: "15+ years", value: 15 },
+  { label: "10-15 years", value: 10 },
+  { label: "5-10 years", value: 5 },
+  { label: "3-5 years", value: 3 },
+  { label: "1-3 years", value: 1 },
+  { label: "0-1 years", value: 0 },
+];
+
+const genderOptions = ["Show All", "Male", "Female"];
+
 const Filter = ({ onFilterChange }) => {
-  const [filters, setFilters] = useState({
-    rating: "Show all",
-    experience: "Show all",
-    gender: "Show All",
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const getInitialFilters = () => ({
+    rating: searchParams.get("rating")
+      ? Number(searchParams.get("rating"))
+      : null,
+    experience: searchParams.get("experience")
+      ? Number(searchParams.get("experience"))
+      : null,
+    gender: searchParams.get("gender") || "Show All",
   });
 
-  const handleChange = (category, value) => {
-    const updatedFilters = { ...filters, [category]: value };
+  const [filters, setFilters] = useState(getInitialFilters);
+
+  useEffect(() => {
+    setFilters(getInitialFilters());
+  }, [searchParams]);
+
+  const updateURLParams = (updatedFilters) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updatedFilters).forEach(([key, value]) => {
+      if (value === null || value === "Show All") {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const handleChange = (category, selectedValue) => {
+    const updatedFilters = { ...filters, [category]: selectedValue };
     setFilters(updatedFilters);
     onFilterChange(updatedFilters);
+    updateURLParams(updatedFilters);
   };
 
   const resetFilters = () => {
     const defaultFilters = {
-      rating: "Show all",
-      experience: "Show all",
+      rating: null,
+      experience: null,
       gender: "Show All",
     };
     setFilters(defaultFilters);
     onFilterChange(defaultFilters);
+    updateURLParams(defaultFilters);
   };
 
   return (
@@ -35,51 +88,41 @@ const Filter = ({ onFilterChange }) => {
 
       <div className={styles.filterSection}>
         <h4 className={styles.filterTitle}>Rating</h4>
-        {["Show all", "1 star", "2 star", "3 star", "4 star", "5 star"].map(
-          (rating) => (
-            <label key={rating} className={styles.filterLabel}>
-              <input
-                type="radio"
-                name="rating"
-                value={rating}
-                checked={filters.rating === rating}
-                onChange={() => handleChange("rating", rating)}
-                className={styles.filterInput}
-              />
-              {rating}
-            </label>
-          )
-        )}
+        {ratingOptions.map(({ label, value }) => (
+          <label key={label} className={styles.filterLabel}>
+            <input
+              type="radio"
+              name="rating"
+              value={value || ""}
+              checked={filters.rating === value}
+              onChange={() => handleChange("rating", value)}
+              className={styles.filterInput}
+            />
+            {label}
+          </label>
+        ))}
       </div>
 
       <div className={styles.filterSection}>
         <h4 className={styles.filterTitle}>Experience</h4>
-        {[
-          "Show all",
-          "15+ years",
-          "10-15 years",
-          "5-10 years",
-          "3-5 years",
-          "1-3 years",
-          "0-1 years",
-        ].map((experience) => (
-          <label key={experience} className={styles.filterLabel}>
+        {experienceOptions.map(({ label, value }) => (
+          <label key={label} className={styles.filterLabel}>
             <input
               type="radio"
               name="experience"
-              value={experience}
-              checked={filters.experience === experience}
-              onChange={() => handleChange("experience", experience)}
+              value={value || ""}
+              checked={filters.experience === value}
+              onChange={() => handleChange("experience", value)}
               className={styles.filterInput}
             />
-            {experience}
+            {label}
           </label>
         ))}
       </div>
 
       <div className={styles.filterSection}>
         <h4 className={styles.filterTitle}>Gender</h4>
-        {["Show All", "Male", "Female"].map((gender) => (
+        {genderOptions.map((gender) => (
           <label key={gender} className={styles.filterLabel}>
             <input
               type="radio"

@@ -62,10 +62,6 @@
   min-width: 65px;
 }
 
-.dateSelector .dateButton:hover {
-  background: #ddd;
-}
-
 .dateSelector .activeDate {
   background: #1f5434;
   color: white;

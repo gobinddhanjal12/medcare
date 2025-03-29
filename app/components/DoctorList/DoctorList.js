@@ -24,6 +24,8 @@ const DoctorList = ({ filters }) => {
   }, [searchParams]);
 
   useEffect(() => {
+    if (!filters) return; // Prevent running with undefined filters
+
     const fetchDoctors = async () => {
       setLoading(true);
       setError(null);
@@ -61,13 +63,18 @@ const DoctorList = ({ filters }) => {
   const handleFilterChange = (filters) => {
     const params = new URLSearchParams();
 
-    if (filters.rating !== "Show all") {
-      params.set("rating", filters.rating.split(" ")[0]);
+    // Ensure rating is a valid string before splitting
+    if (typeof filters.rating === "string" && filters.rating !== "Show all") {
+      params.set("rating", filters.rating.split(" ")[0] || filters.rating);
     }
-    if (filters.experience !== "Show all") {
-      params.set("experience", filters.experience.split(" ")[0]);
+
+    // Ensure experience is a valid string before splitting
+    if (typeof filters.experience === "string" && filters.experience !== "Show all") {
+      params.set("experience", filters.experience.split(" ")[0] || filters.experience);
     }
-    if (filters.gender !== "Show All") {
+
+    // Ensure gender is a valid string
+    if (typeof filters.gender === "string" && filters.gender !== "Show All") {
       params.set("gender", filters.gender);
     }
 

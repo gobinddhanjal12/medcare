@@ -1,13 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import styles from "./SearchBar.module.css";
 
 const SearchBar = ({ setFilters }) => {
-  const [query, setQuery] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialQuery = searchParams.get("name") || "";
+  const [query, setQuery] = useState(initialQuery);
+
+  useEffect(() => {
+    setQuery(searchParams.get("name") || "");
+  }, [searchParams]);
 
   const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (query.trim()) {
+      params.set("name", query.trim());
+    } else {
+      params.delete("name");
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false });
+
     setFilters((prev) => ({
       ...prev,
       name: query.trim() || undefined,

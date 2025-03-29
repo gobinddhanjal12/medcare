@@ -22,6 +22,28 @@ const ScheduleAppointment = ({ doctorId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [doctorLocation, setDoctorLocation] = useState("");
+
+  useEffect(() => {
+    const fetchDoctorDetails = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${doctorId}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch doctor details");
+
+        const doctorData = await res.json();
+        setDoctorLocation(doctorData.data.location);
+      } catch (err) {
+        console.error("Error fetching doctor details:", err);
+      }
+    };
+
+    if (doctorId) {
+      fetchDoctorDetails();
+    }
+  }, [doctorId]);
+
   const fetchTimeSlots = async (doctorId, selectedDate) => {
     setLoading(true);
     setError(null);
@@ -126,11 +148,13 @@ const ScheduleAppointment = ({ doctorId }) => {
     const timeSlotId =
       allSlots.findIndex((slot) => slot.time === selectedSlot) + 1;
 
+    const mode = activeTab === "video" ? "online" : "offline";
+
     router.push(
       `/appointment-request?date=${format(
         selectedDate,
         "yyyy-MM-dd"
-      )}&time=${selectedSlot}&timeSlotId=${timeSlotId}&doctorId=${selectedDoctorId}`
+      )}&time=${selectedSlot}&timeSlotId=${timeSlotId}&doctorId=${selectedDoctorId}&mode=${mode}`
     );
   };
 
@@ -144,7 +168,9 @@ const ScheduleAppointment = ({ doctorId }) => {
     <div className={styles.container}>
       <div className={styles.box}>
         <h2 className={styles.title}>Schedule Appointment</h2>
-        <button className={styles.bookButton} onClick={handleNext}>Book Appointment</button>
+        <button className={styles.bookButton} onClick={handleNext}>
+          Book Appointment
+        </button>
       </div>
 
       <div className={styles.tabContainer}>
@@ -172,9 +198,7 @@ const ScheduleAppointment = ({ doctorId }) => {
           value={selectedOption}
           onChange={(e) => setSelectedOption(e.target.value)}
         >
-          <option value="1">MedicareHeart Institute, Okhla Road</option>
-          <option value="2">Apollo Hospital, Delhi</option>
-          <option value="3">Max Healthcare, Gurgaon</option>
+          {doctorLocation && <option value={doctorId}>{doctorLocation}</option>}
         </select>
         <ChevronDown className={styles.icon} size={28} />
       </div>
