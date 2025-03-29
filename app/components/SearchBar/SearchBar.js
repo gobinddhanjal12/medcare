@@ -10,7 +10,7 @@ const SearchBar = ({ setFilters }) => {
   const handleSearch = () => {
     setFilters((prev) => ({
       ...prev,
-      name: query.trim() || undefined, // Remove name filter if empty
+      name: query.trim() || undefined,
     }));
   };
 

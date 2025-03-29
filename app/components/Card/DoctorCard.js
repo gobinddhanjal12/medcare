@@ -2,12 +2,8 @@
 
 import styles from "./DoctorCard.module.css";
 import { Stethoscope, Clock, Star } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "http://localhost:5000";
-
-const DEFAULT_IMAGE = "/default-doctor.png";
 
 const DoctorCard = ({ doctor }) => {
   console.log(doctor);
@@ -20,14 +16,6 @@ const DoctorCard = ({ doctor }) => {
     average_rating = 0,
     photo_path,
   } = doctor;
-
-  const imageUrl =
-    typeof photo_path === "string" &&
-    (photo_path.startsWith("http://") || photo_path.startsWith("https://"))
-      ? photo_path
-      : photo_path
-      ? `${API_BASE_URL}${photo_path}`
-      : DEFAULT_IMAGE;
 
   const totalStars = 5;
   const filledStars = Math.floor(average_rating);
@@ -44,11 +32,12 @@ const DoctorCard = ({ doctor }) => {
 
   return (
     <div className={styles.card} onClick={handleCardClick}>
-      <img
-        src={imageUrl}
+      <Image
+        width={200}
+        height={200}
+        src={photo_path}
         alt={name}
         className={styles.profileImage}
-        loading="lazy"
       />
       <h3 className={styles.name}>{name}</h3>
       <div className={styles.details}>

@@ -19,13 +19,16 @@ const ProfilePage = () => {
           throw new Error("No token found. Please log in.");
         }
 
-        const response = await fetch("http://localhost:3000/api/v1/auth/me", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/me`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
         if (!response.ok) {
@@ -47,20 +50,52 @@ const ProfilePage = () => {
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (
-    <div className={styles.profileContainer}>
-      <h1 className={styles.title}>User Profile</h1>
+    <div className={styles.container}>
       {user && (
-        <div className={styles.card}>
-          <div className={styles.avatar}>{user.name.charAt(0)}</div>
-          <div className={styles.details}>
-            <h2>Name: {user.name}</h2>
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-            <p>
-              <strong>Joined:</strong>{" "}
-              {new Date(user.created_at).toLocaleDateString()}
-            </p>
+        <div className={styles.profileContainer}>
+          <div className={styles.left}>
+            <div className={styles.avatar}>
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+          </div>
+
+          <div className={styles.right}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={user.name}
+                disabled
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={user.email}
+                disabled
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="joined">Joined</label>
+              <input
+                id="joined"
+                name="joined"
+                type="text"
+                value={new Date(user.created_at).toLocaleDateString("en-IN", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+                disabled
+              />
+            </div>
           </div>
         </div>
       )}

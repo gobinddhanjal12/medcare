@@ -1,7 +1,6 @@
 "use client";
 import ScheduleAppointment from "@/app/components/ScheduleAppointment/ScheduleAppointment";
 import styles from "./styles.module.css";
-import Footer from "@/app/components/Footer/Footer";
 import { useParams } from "next/navigation";
 
 const Appointments = () => {
@@ -20,7 +19,6 @@ const Appointments = () => {
           <ScheduleAppointment doctorId={id} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

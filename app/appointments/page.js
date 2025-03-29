@@ -4,7 +4,6 @@ import { useState } from "react";
 import styles from "./doctorList.module.css";
 import SearchBar from "../components/SearchBar/SearchBar";
 import DoctorList from "../components/DoctorList/DoctorList";
-import Footer from "../components/Footer/Footer";
 import { Suspense } from "react";
 
 export default function AvailableDoctors() {
@@ -21,7 +20,6 @@ export default function AvailableDoctors() {
           <DoctorList filters={filters} />
         </Suspense>
       </div>
-      <Footer />
     </div>
   );
 }

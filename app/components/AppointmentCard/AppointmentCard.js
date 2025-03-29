@@ -1,6 +1,14 @@
+import { useState } from "react";
+import ReviewBox from "../ReviewBox/ReviewBox";
 import styles from "./AppointmentCard.module.css";
 
 export const AppointmentCard = ({ appointment }) => {
+  const [canReview, setCanReview] = useState(appointment.can_review);
+
+  const handleReviewSubmit = () => {
+    setCanReview(false);
+  };
+
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
     return `${dateObj.getDate()}-${
@@ -16,8 +24,6 @@ export const AppointmentCard = ({ appointment }) => {
     return `${formattedHour}:${minutes} ${amPm}`;
   };
 
-  console.log(appointment)
-
   return (
     <div className={styles.card}>
       <h3>{appointment.doctor_name}</h3>
@@ -30,9 +36,16 @@ export const AppointmentCard = ({ appointment }) => {
       <p>
         <strong>Time:</strong> {formatTime(appointment.start_time)}
       </p>
-      <p className={`${styles.status} ${styles[appointment.request_status]}`}>
-        {appointment.request_status}
+      <p className={`${styles.status} ${styles[appointment.status]}`}>
+        {appointment.status}
       </p>
+
+      {canReview && (
+        <ReviewBox
+          appointmentId={appointment.id}
+          onSuccess={handleReviewSubmit}
+        />
+      )}
     </div>
   );
 };

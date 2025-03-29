@@ -77,9 +77,9 @@ const Header = () => {
                   Appointments
                 </Link>
               </li>
-              <li className={pathname === "/health-blog" ? styles.active : ""}>
-                <Link href="/health-blog" onClick={handleCloseMenu}>
-                  Health Blog
+              <li className={pathname === "/emergency" ? styles.active : ""}>
+                <Link href="/emergency" onClick={handleCloseMenu}>
+                  Emergency
                 </Link>
               </li>
               <li className={pathname === "/reviews" ? styles.active : ""}>
@@ -90,14 +90,18 @@ const Header = () => {
               {user ? (
                 <>
                   <li className={pathname === "/profile" ? styles.active : ""}>
-                    <Link href="/profile">Profile</Link>
+                    <Link href="/profile" onClick={handleCloseMenu}>
+                      Profile
+                    </Link>
                   </li>
                   <li
                     className={
                       pathname === "/user-appointments" ? styles.active : ""
                     }
                   >
-                    <Link href="/user-appointments">My Appointments</Link>
+                    <Link href="/user-appointments" onClick={handleCloseMenu}>
+                      My Appointments
+                    </Link>
                   </li>
                   <li>
                     <button
@@ -149,8 +153,8 @@ const Header = () => {
             <li className={pathname === "/appointments" ? styles.active : ""}>
               <Link href="/appointments">Appointments</Link>
             </li>
-            <li className={pathname === "/health-blog" ? styles.active : ""}>
-              <Link href="/health-blog">Health Blog</Link>
+            <li className={pathname === "/emergency" ? styles.active : ""}>
+              <Link href="/emergency">Emergency</Link>
             </li>
             <li className={pathname === "/reviews" ? styles.active : ""}>
               <Link href="/reviews">Reviews</Link>
@@ -175,20 +179,22 @@ const Header = () => {
                   <li
                     className={pathname === "/profile" ? styles.active : ""}
                     onClick={() => {
+                      router.push("/profile");
                       setIsDropdownOpen(false);
                     }}
                   >
-                    <Link href="/profile">Profile</Link>
+                    Profile
                   </li>
                   <li
                     className={
                       pathname === "/user-appointments" ? styles.active : ""
                     }
                     onClick={() => {
+                      router.push("/user-appointments");
                       setIsDropdownOpen(false);
                     }}
                   >
-                    <Link href="/user-appointments">My Appointments</Link>
+                    My Appointments
                   </li>
                   <li onClick={handleLogout} className={styles.logoutItem}>
                     Logout

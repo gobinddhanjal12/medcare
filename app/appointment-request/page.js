@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import styles from "./styles.module.css";
+import Image from "next/image";
 
 const AppointmentRequest = () => {
   const searchParams = useSearchParams();
@@ -96,29 +97,28 @@ const AppointmentRequest = () => {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <div className={styles.appointmentInfo}>
-            <h2 className={styles.sectionTitle}>Doctor Details</h2>
-            {doctor ? (
-              <div className={styles.doctorCard}>
-                <img
-                  src={doctor.photo_path}
-                  alt={doctor.name}
-                  className={styles.doctorImage}
-                />
-                <div className={styles.doctorInfo}>
-                  <h3 className={styles.doctorName}>{doctor.name}</h3>
-                  <p className={styles.specialty}>{doctor.specialty}</p>
-                  <p className={styles.location}>{doctor.location}</p>
-                  <p className={styles.experience}>
-                    Experience: {doctor.experience} years
-                  </p>
-                  <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
-                </div>
+          {doctor ? (
+            <div className={styles.doctorCard}>
+              <Image
+                width={200}
+                height={200}
+                src={doctor.photo_path}
+                alt={doctor.name}
+                className={styles.doctorImage}
+              />
+              <div className={styles.doctorInfo}>
+                <h3 className={styles.doctorName}>{doctor.name}</h3>
+                <p className={styles.specialty}>{doctor.specialty}</p>
+                <p className={styles.location}>{doctor.location}</p>
+                <p className={styles.experience}>
+                  Experience: {doctor.experience} years
+                </p>
+                <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
               </div>
-            ) : (
-              <p>Loading doctor details...</p>
-            )}
-          </div>
+            </div>
+          ) : (
+            <p>Loading doctor details...</p>
+          )}
 
           <div className={styles.appointmentInfo}>
             <h2 className={styles.sectionTitle}>Appointment Details</h2>

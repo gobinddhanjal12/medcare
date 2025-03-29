@@ -144,7 +144,7 @@ const ScheduleAppointment = ({ doctorId }) => {
     <div className={styles.container}>
       <div className={styles.box}>
         <h2 className={styles.title}>Schedule Appointment</h2>
-        <button className={styles.bookButton}>Book Appointment</button>
+        <button className={styles.bookButton} onClick={handleNext}>Book Appointment</button>
       </div>
 
       <div className={styles.tabContainer}>

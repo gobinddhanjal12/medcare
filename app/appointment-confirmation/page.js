@@ -55,61 +55,59 @@ const AppointmentConfirmation = () => {
 
   return (
     <Suspense fallback={<p>Loading appointment details...</p>}>
-    <div className={styles.container}>
-      <h1 className={styles.title}>Appointment Confirmation</h1>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Appointment Confirmation</h1>
 
-      {loading && (
-        <p className={styles.loading}>Loading appointment details...</p>
-      )}
-      {error && <p className={styles.error}>{error}</p>}
+        {loading && (
+          <p className={styles.loading}>Loading appointment details...</p>
+        )}
+        {error && <p className={styles.error}>{error}</p>}
 
-      {appointment && (
-        <div className={styles.details}>
-          <p className={styles.success}>
-            Your appointment request has been submitted
-          </p>
+        {appointment && (
+          <div className={styles.details}>
+            <p className={styles.success}>
+              Your appointment request has been submitted
+            </p>
 
-          <p className={styles.info}>
-            <strong>Doctor:</strong> {appointment.doctor_name} (
-            {appointment.specialty})
-          </p>
-          <p className={styles.info}>
-            <strong>Location:</strong> {appointment.location}
-          </p>
-          <p className={styles.info}>
-            <strong>Consultation Fee:</strong> ₹{appointment.consultation_fee}
-          </p>
-          <p className={styles.info}>
-            <strong>Patient:</strong> {appointment.patient_name} (
-            {appointment.patient_email})
-          </p>
-          <p className={styles.info}>
-            <strong>Appointment Date:</strong>{" "}
-            {appointment.appointment_date.split("T")[0]}
-          </p>
-          <p className={styles.info}>
-            <strong>Time:</strong> {appointment.start_time} -{" "}
-            {appointment.end_time}
-          </p>
-          <p className={styles.info}>
-            <strong>Consultation Type:</strong> {appointment.consultation_type}
-          </p>
-          <p className={styles.info}>
-            <strong>Health Info:</strong> {appointment.health_info}
-          </p>
-          <p className={styles.status}>
-            <strong>Status:</strong> {appointment.status}
-          </p>
+            <p className={styles.info}>
+              <strong>Doctor:</strong> {appointment.doctor_name} (
+              {appointment.specialty})
+            </p>
+            <p className={styles.info}>
+              <strong>Location:</strong> {appointment.location}
+            </p>
+            <p className={styles.info}>
+              <strong>Consultation Fee:</strong> ₹{appointment.consultation_fee}
+            </p>
+            <p className={styles.info}>
+              <strong>Patient:</strong> {appointment.patient_name} (
+              {appointment.patient_email})
+            </p>
+            <p className={styles.info}>
+              <strong>Appointment Date:</strong>{" "}
+              {appointment.appointment_date.split("T")[0]}
+            </p>
+            <p className={styles.info}>
+              <strong>Time:</strong> {appointment.start_time} -{" "}
+              {appointment.end_time}
+            </p>
+            <p className={styles.info}>
+              <strong>Consultation Type:</strong>{" "}
+              {appointment.consultation_type}
+            </p>
+            <p className={styles.info}>
+              <strong>Health Info:</strong> {appointment.health_info}
+            </p>
 
-          <button
-            className={styles.homeButton}
-            onClick={() => router.push("/")}
-          >
-            Go Back Home
-          </button>
-        </div>
-      )}
-    </div>
+            <button
+              className={styles.homeButton}
+              onClick={() => router.push("/")}
+            >
+              Go Back Home
+            </button>
+          </div>
+        )}
+      </div>
     </Suspense>
   );
 };

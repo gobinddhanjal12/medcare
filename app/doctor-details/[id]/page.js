@@ -3,9 +3,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import styles from "./styles.module.css";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+import DoctorReviews from "@/app/components/DoctorReviews/DoctorReviews";
+import Image from "next/image";
+import {
+  BookA,
+  Clock,
+  GraduationCap,
+  MapPin,
+  Stethoscope,
+  StickyNote,
+  Tag,
+} from "lucide-react";
 
 const DoctorDetails = () => {
   const { id } = useParams();
@@ -19,7 +27,9 @@ const DoctorDetails = () => {
 
     const fetchDoctorDetails = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/doctors/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${id}`
+        );
         if (!res.ok) throw new Error("Failed to fetch doctor details");
         const data = await res.json();
         setDoctor(data.data);
@@ -38,40 +48,58 @@ const DoctorDetails = () => {
   if (error) return <p className={styles.error}>Error: {error}</p>;
   if (!doctor) return <p className={styles.error}>Doctor not found</p>;
 
-  const imageUrl = doctor.photo_path?.startsWith("/")
-    ? `${API_BASE_URL}${doctor.photo_path}`
-    : doctor.photo_path || "/default-doctor.jpg"; // Provide a default image
-
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <img src={imageUrl} alt={doctor.name} className={styles.profileImage} />
-        <div className={styles.details}>
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.desktopBookButton}
+          onClick={() => router.push(`/book-appointment/${id}`)}
+        >
+          Book Appointment
+        </button>
+      </div>
+      <div className={styles.subContainer}>
+        <div className={styles.left}>
+          <Image
+            src={doctor.photo_path}
+            alt={doctor.name}
+            width={150}
+            height={150}
+            className={styles.profileImage}
+          />
+        </div>
+        <div className={styles.right}>
           <h2 className={styles.name}>{doctor.name}</h2>
-          <p className={styles.specialty}>{doctor.specialty}</p>
-          <p>
-            <strong>Experience:</strong> {doctor.experience} years
+
+          <div className={styles.details}>
+            <span className={styles.detail}>
+              <Stethoscope className={styles.icon} /> {doctor.specialty}
+            </span>
+            <span className={styles.detail}>
+              <Clock className={styles.icon} /> {doctor.experience} Years
+            </span>
+          </div>
+
+          <p className={styles.detail}>
+            <MapPin className={styles.icon} /> {doctor.location}
           </p>
-          <p>
-            <strong>Location:</strong> {doctor.location}
-          </p>
-          <p>
-            <strong>Consultation Fee:</strong> ₹{doctor.consultation_fee}
+          <p className={styles.detail}>
+            <Tag className={styles.icon} /> ₹{doctor.consultation_fee}
           </p>
 
           {doctor.education ? (
-            <p>
-              <strong>Education:</strong> {doctor.education}
+            <p className={styles.detail}>
+              <GraduationCap className={styles.icon} /> {doctor.education}
             </p>
           ) : null}
           {doctor.bio ? (
-            <p>
-              <strong>Bio:</strong> {doctor.bio}
+            <p className={styles.detail}>
+              <StickyNote className={styles.icon} /> {doctor.bio}
             </p>
           ) : null}
           {doctor.languages && doctor.languages.length > 0 ? (
-            <p>
-              <strong>Languages:</strong> {doctor.languages.join(", ")}
+            <p className={styles.detail}>
+              <BookA className={styles.icon} /> {doctor.languages.join(", ")}
             </p>
           ) : null}
 
@@ -81,6 +109,8 @@ const DoctorDetails = () => {
           >
             Book Appointment
           </button>
+
+          <DoctorReviews />
         </div>
       </div>
     </div>

@@ -2,9 +2,12 @@
   background: #f6f6f6;
   padding: 40px 24px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 10;
 }
+
 
 .subContainer {
   display: flex;

@@ -1,20 +1,15 @@
 .container {
-  padding: 40px 20px;
+  padding: 40px 4px;
 }
 
 .subContainer {
-  max-width: 600px;
-  padding: 20px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 4px;
   text-align: center;
 }
 
 .title {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 600;
   color: #333;
   margin-bottom: 10px;
 }
@@ -42,15 +37,13 @@
 .doctorCard {
   display: flex;
   align-items: center;
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2px;
+  justify-content: center;
 }
 
 .doctorImage {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-right: 15px;
   object-fit: cover;
@@ -58,6 +51,7 @@
 
 .doctorInfo {
   text-align: left;
+  line-height: 2;
 }
 
 .doctorName {
@@ -87,7 +81,7 @@
 }
 
 .confirmButton {
-  background: #28a745;
+  background: #1c4a2a;
   color: white;
   font-size: 16px;
   padding: 10px 15px;
@@ -104,4 +98,18 @@
 .confirmButton:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 40px 20px;
+  }
+
+  .subContainer {
+    padding: 20px;
+  }
+
+  .doctorCard {
+    padding: 15px;
+  }
 }

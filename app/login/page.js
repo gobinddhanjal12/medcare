@@ -32,9 +32,9 @@ export default function Login() {
           if (data) {
             localStorage.setItem("user", JSON.stringify(data));
           }
-          router.push("/appointments");
+          window.location.href = "/appointments";
         })
-        .catch(() => router.push("/appointments"));
+        .catch(() => (window.location.href = "/appointments"));
     }
   }, []);
 

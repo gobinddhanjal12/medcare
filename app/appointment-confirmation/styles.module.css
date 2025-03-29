@@ -1,17 +1,11 @@
 .container {
-  max-width: 600px;
-  margin: 50px auto;
   padding: 20px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
 }
 
 .title {
   text-align: center;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 600;
   margin-bottom: 20px;
   color: #333;
 }
@@ -41,6 +35,7 @@
   background: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
+  line-height: 2.0;
 }
 
 .info {
@@ -53,23 +48,12 @@
   color: #222;
 }
 
-.status {
-  margin-top: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #555;
-  text-align: center;
-}
-
-.status strong {
-  color: #d32f2f;
-}
 
 .homeButton {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #1f5221;
+  background-color: #1c4a2a;
   color: white;
   border: none;
   border-radius: 5px;
