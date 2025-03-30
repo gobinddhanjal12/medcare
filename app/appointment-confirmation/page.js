@@ -95,9 +95,6 @@ const AppointmentConfirmation = () => {
               <strong>Consultation Type:</strong>{" "}
               {appointment.consultation_type}
             </p>
-            <p className={styles.info}>
-              <strong>Health Info:</strong> {appointment.health_info}
-            </p>
 
             <button
               className={styles.homeButton}

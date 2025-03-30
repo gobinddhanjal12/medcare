@@ -48,13 +48,6 @@ const Filter = ({ onFilterChange }) => {
   const updateURLParams = (updatedFilters) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    // Object.entries(updatedFilters).forEach(([key, value]) => {
-    //   if (value === null || value === "Show All") {
-    //     params.delete(key);
-    //   } else {
-    //     params.set(key, value);
-    //   }
-    // });
     Object.entries(updatedFilters).forEach(([key, value]) => {
       if (value === null || value === "Show All") {
         params.delete(key);

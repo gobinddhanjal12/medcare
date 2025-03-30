@@ -55,7 +55,7 @@ const ScheduleAppointment = ({ doctorId }) => {
       );
 
       if (!response.ok) throw new Error("Failed to fetch slots");
-      const result = await response.json();
+      const result = await response.json();      
 
       const availableSlots = result.data.map((slot) =>
         slot.start_time.slice(0, 5)

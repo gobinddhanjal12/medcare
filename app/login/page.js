@@ -122,7 +122,7 @@ export default function Login() {
           </button>
 
           <div className={styles.forgetPassword}>
-            <Link href="#">Forgot Password?</Link>
+            <Link href="/forgot-password">Forgot Password?</Link>
           </div>
 
           <div className={styles.separator}>

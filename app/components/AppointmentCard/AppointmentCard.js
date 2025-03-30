@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReviewBox from "../ReviewBox/ReviewBox";
 import styles from "./AppointmentCard.module.css";
-import { Calendar, Clock, Stethoscope } from "lucide-react";
+import { Calendar, Clock, HashIcon, Laptop, MapPin, Stethoscope } from "lucide-react";
 import Image from "next/image";
 
 export const AppointmentCard = ({ appointment }) => {
@@ -26,8 +26,6 @@ export const AppointmentCard = ({ appointment }) => {
     return `${formattedHour}:${minutes} ${amPm}`;
   };
 
-  console.log(appointment);
-
   return (
     <div className={styles.card}>
       <div className={styles.doctorDetail}>
@@ -43,8 +41,22 @@ export const AppointmentCard = ({ appointment }) => {
       </div>
 
       <p className={styles.detail}>
+        <HashIcon className={styles.icon} /> {appointment.id}
+      </p>
+
+      <p className={styles.detail}>
         <Stethoscope className={styles.icon} /> {appointment.specialty}
       </p>
+
+      {appointment.consultation_type === "online" ? (
+        <p className={styles.detail}>
+          <Laptop className={styles.icon} /> Online
+        </p>
+      ) : (
+        <p className={styles.detail}>
+          <MapPin className={styles.icon} /> {appointment.location}
+        </p>
+      )}
 
       <p className={styles.detail}>
         <Calendar className={styles.icon} />{" "}
