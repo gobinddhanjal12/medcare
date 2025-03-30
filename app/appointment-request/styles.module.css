@@ -81,7 +81,7 @@
 }
 
 .confirmButton {
-  background: #1c4a2a;
+  background: var(--primary-color);
   color: white;
   font-size: 16px;
   padding: 10px 15px;

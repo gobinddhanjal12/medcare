@@ -16,11 +16,11 @@ const ratingOptions = [
 const experienceOptions = [
   { label: "Show all", value: null },
   { label: "15+ years", value: 15 },
-  { label: "10-15 years", value: 10 },
-  { label: "5-10 years", value: 5 },
-  { label: "3-5 years", value: 3 },
-  { label: "1-3 years", value: 1 },
-  { label: "0-1 years", value: 0 },
+  { label: "10-15 years", value: 10, max: 15 },
+  { label: "5-10 years", value: 5, max: 10 },
+  { label: "3-5 years", value: 3, max: 5 },
+  { label: "1-3 years", value: 1, max: 3 },
+  { label: "0-1 years", value: 0, max: 1 },
 ];
 
 const genderOptions = ["Show All", "Male", "Female"];
@@ -48,11 +48,27 @@ const Filter = ({ onFilterChange }) => {
   const updateURLParams = (updatedFilters) => {
     const params = new URLSearchParams(searchParams.toString());
 
+    // Object.entries(updatedFilters).forEach(([key, value]) => {
+    //   if (value === null || value === "Show All") {
+    //     params.delete(key);
+    //   } else {
+    //     params.set(key, value);
+    //   }
+    // });
     Object.entries(updatedFilters).forEach(([key, value]) => {
       if (value === null || value === "Show All") {
         params.delete(key);
+        if (key === "experience") params.delete("max_experience");
       } else {
         params.set(key, value);
+        if (key === "experience") {
+          const max = experienceOptions.find((opt) => opt.value === value)?.max;
+          if (max !== undefined) {
+            params.set("max_experience", max);
+          } else {
+            params.delete("max_experience");
+          }
+        }
       }
     });
 
@@ -61,6 +77,13 @@ const Filter = ({ onFilterChange }) => {
 
   const handleChange = (category, selectedValue) => {
     const updatedFilters = { ...filters, [category]: selectedValue };
+
+    if (category === "experience") {
+      const max = experienceOptions.find(
+        (opt) => opt.value === selectedValue
+      )?.max;
+    }
+
     setFilters(updatedFilters);
     onFilterChange(updatedFilters);
     updateURLParams(updatedFilters);

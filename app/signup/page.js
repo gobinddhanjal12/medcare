@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./signup.module.css";
 import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -149,19 +149,23 @@ export default function Signup() {
 
           <button
             type="button"
-            className={styles.googlebtn}
-            onClick={handleGoogleLogin}
-          >
-            <FaGoogle size={16} className={styles.googleIcon} /> Signup with
-            Google
-          </button>
-          <button
-            type="button"
             className={styles.resetbtn}
             onClick={handleReset}
             disabled={loading}
           >
             Reset
+          </button>
+
+          <div className={styles.separator}>
+            <span>or</span>
+          </div>
+          <button
+            type="button"
+            className={styles.googlebtn}
+            onClick={handleGoogleLogin}
+          >
+            <FcGoogle size={18} className={styles.googleIcon} /> Continue with
+            Google
           </button>
         </form>
       </div>

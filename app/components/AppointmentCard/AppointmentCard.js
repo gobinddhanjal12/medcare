@@ -1,6 +1,8 @@
 import { useState } from "react";
 import ReviewBox from "../ReviewBox/ReviewBox";
 import styles from "./AppointmentCard.module.css";
+import { Calendar, Clock, Stethoscope } from "lucide-react";
+import Image from "next/image";
 
 export const AppointmentCard = ({ appointment }) => {
   const [canReview, setCanReview] = useState(appointment.can_review);
@@ -24,18 +26,35 @@ export const AppointmentCard = ({ appointment }) => {
     return `${formattedHour}:${minutes} ${amPm}`;
   };
 
+  console.log(appointment);
+
   return (
     <div className={styles.card}>
-      <h3>{appointment.doctor_name}</h3>
-      <p>
-        <strong>Specialty:</strong> {appointment.specialty}
+      <div className={styles.doctorDetail}>
+        <Image
+          src={appointment.doctor_photo}
+          width={50}
+          height={50}
+          alt="doctor"
+          className={styles.doctorImage}
+        />
+
+        <h3>{appointment.doctor_name}</h3>
+      </div>
+
+      <p className={styles.detail}>
+        <Stethoscope className={styles.icon} /> {appointment.specialty}
       </p>
-      <p>
-        <strong>Date:</strong> {formatDate(appointment.appointment_date)}
+
+      <p className={styles.detail}>
+        <Calendar className={styles.icon} />{" "}
+        {formatDate(appointment.appointment_date)}
       </p>
-      <p>
-        <strong>Time:</strong> {formatTime(appointment.start_time)}
+
+      <p className={styles.detail}>
+        <Clock className={styles.icon} /> {formatTime(appointment.start_time)}
       </p>
+
       <p className={`${styles.status} ${styles[appointment.status]}`}>
         {appointment.status}
       </p>

@@ -11,7 +11,7 @@
 }
 
 .hr {
-  background: #1c4a2a;
+  background: var(--primary-color);
   padding: 4px;
   margin-top: 8px;
   margin-bottom: 40px;

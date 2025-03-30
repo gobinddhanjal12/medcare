@@ -10,7 +10,7 @@
 }
 
 .left {
-  background: #1c4a2a;
+  background: var(--primary-color);
   align-content: center;
   color: #ffffffdf;
   line-height: 1.4;

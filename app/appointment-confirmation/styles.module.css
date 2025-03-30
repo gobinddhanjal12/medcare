@@ -53,7 +53,7 @@
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #1c4a2a;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;

@@ -99,7 +99,6 @@ const ScheduleAppointment = ({ doctorId }) => {
   };
 
   useEffect(() => {
-    console.log("Selected Date:", selectedDate);
     fetchTimeSlots(doctorId, selectedDate);
   }, [doctorId, selectedDate]);
 

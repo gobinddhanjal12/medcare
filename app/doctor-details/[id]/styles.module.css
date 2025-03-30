@@ -41,7 +41,7 @@
 .bookButton {
   margin-top: 15px;
   padding: 10px 15px;
-  background: #1c4a2a;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -115,7 +115,7 @@
 
   .desktopBookButton {
     padding: 10px 15px;
-    background: #1c4a2a;
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 8px;

@@ -4,7 +4,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.094);
   padding: 16px;
   transition: transform 0.2s;
-  line-height: 2.0;
+  line-height: 2;
   position: relative;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .card h3 {
-  margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .status {
@@ -23,9 +23,7 @@
   font-size: small;
   border-radius: 50px;
   text-align: center;
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  margin-bottom: 10px;
 }
 
 .status.pending {
@@ -68,4 +66,38 @@
 .pageNumber {
   font-weight: bold;
   margin: 0 10px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.doctorDetail {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.doctorImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin-bottom: auto;
+  }
 }

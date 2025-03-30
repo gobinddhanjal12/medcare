@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const DoctorCard = ({ doctor }) => {
-  console.log(doctor);
   const router = useRouter();
   const {
     id,

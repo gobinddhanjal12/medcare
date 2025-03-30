@@ -1,18 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
 import { Mail, Lock } from "lucide-react";
 import Link from "next/link";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -112,15 +110,6 @@ export default function Login() {
 
           <button
             type="button"
-            className={styles.googlebtn}
-            onClick={handleGoogleLogin}
-          >
-            <FaGoogle size={16} className={styles.googleIcon} /> Login with
-            Google
-          </button>
-
-          <button
-            type="button"
             className={styles.resetbtn}
             onClick={() => {
               setEmail("");
@@ -135,6 +124,19 @@ export default function Login() {
           <div className={styles.forgetPassword}>
             <Link href="#">Forgot Password?</Link>
           </div>
+
+          <div className={styles.separator}>
+            <span>or</span>
+          </div>
+
+          <button
+            type="button"
+            className={styles.googlebtn}
+            onClick={handleGoogleLogin}
+          >
+            <FcGoogle size={18} className={styles.googleIcon} /> Continue with
+            Google
+          </button>
         </form>
       </div>
     </div>

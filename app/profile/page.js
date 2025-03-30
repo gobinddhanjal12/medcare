@@ -51,6 +51,10 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.title}>
+        Welcome, {user.name.charAt(0).toUpperCase() + user.name.slice(1)}
+      </h1>
+      <hr className={styles.hr} />
       {user && (
         <div className={styles.profileContainer}>
           <div className={styles.left}>
