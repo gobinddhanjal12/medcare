@@ -96,5 +96,6 @@
 }
 
 .patientName {
+  text-transform: capitalize;
   font-style: italic;
 }

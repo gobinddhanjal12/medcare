@@ -71,6 +71,7 @@ const ProfilePage = () => {
                 name="name"
                 type="text"
                 value={user.name}
+                className={styles.name}
                 disabled
               />
             </div>

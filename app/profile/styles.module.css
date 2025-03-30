@@ -91,6 +91,10 @@
   margin-bottom: 20px;
 }
 
+.name{
+  text-transform: capitalize;
+}
+
 @media (min-width: 768px) {
   .profileContainer {
     flex-direction: row;

@@ -74,3 +74,8 @@
   font-size: 16px;
   text-transform: uppercase;
 }
+
+.patientName {
+  text-transform: capitalize;
+  font-style: italic;
+}
