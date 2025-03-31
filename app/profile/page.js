@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,6 +48,12 @@ const ProfilePage = () => {
 
     fetchUser();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
 
   if (loading) return <p>Loading profile...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
@@ -100,6 +109,17 @@ const ProfilePage = () => {
                 })}
                 disabled
               />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <button
+                className={`${styles.logoutBtn} btn`}
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>

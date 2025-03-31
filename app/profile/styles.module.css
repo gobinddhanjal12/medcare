@@ -95,6 +95,11 @@
   text-transform: capitalize;
 }
 
+.logoutBtn{
+  background: var(--primary-color);
+  color: #fff;
+}
+
 @media (min-width: 768px) {
   .profileContainer {
     flex-direction: row;
