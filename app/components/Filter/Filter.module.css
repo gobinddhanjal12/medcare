@@ -1,45 +1,133 @@
+.filterContainer {
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
 .filterHeader {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 500;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.filterTitleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
 }
 
 .resetButton {
-    background: none;
-    border: none;
-    color: #2e7d32;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
+  color: var(--primary-color);
+  padding: 4px 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: none;
+}
+
+.filterContent {
+  display: none;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.filterContent.open {
+  display: block;
 }
 
 .filterSection {
-    background: #FBFBFB;
-    border: 1px solid #E0E8E0;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 10px;
-    text-align: left;
-    padding-left: 20px;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .filterTitle {
-    margin: 0 0 10px 0;
-    font-size: 16px;
-    font-weight: 500;
-    font-size: small;
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .filterLabel {
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-    margin: 10px 0;
-    font-weight: 500;
-    font-size: small;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 16px;
 }
 
 .filterInput {
-    margin-right: 8px;
+  cursor: pointer;
+}
+
+.mobileResetButton {
+  display: block;
+  float: right;
+  color: var(--primary-color);
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .filterContainer {
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  .mobileResetButton {
+    display: none;
+  }
+
+  .resetButton {
+    display: block;
+  }
+  .filterHeader {
+    border: none;
+    padding: 0;
+    background: transparent;
+    margin-bottom: 20px;
+  }
+
+  .toggleButton {
+    display: none;
+  }
+
+  .resetButton {
+    display: inline-block;
+  }
+
+  .filterContent {
+    display: block !important;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./Filter.module.css";
+import { ChevronDown, ChevronUp, Filter as FilterIcon } from "lucide-react";
 
 const ratingOptions = [
   { label: "Show all", value: null },
@@ -40,6 +41,7 @@ const Filter = ({ onFilterChange }) => {
   });
 
   const [filters, setFilters] = useState(getInitialFilters);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   useEffect(() => {
     setFilters(getInitialFilters());
@@ -70,13 +72,6 @@ const Filter = ({ onFilterChange }) => {
 
   const handleChange = (category, selectedValue) => {
     const updatedFilters = { ...filters, [category]: selectedValue };
-
-    if (category === "experience") {
-      const max = experienceOptions.find(
-        (opt) => opt.value === selectedValue
-      )?.max;
-    }
-
     setFilters(updatedFilters);
     onFilterChange(updatedFilters);
     updateURLParams(updatedFilters);
@@ -96,61 +91,83 @@ const Filter = ({ onFilterChange }) => {
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterHeader}>
-        <span>Filter By:</span>
+        <span className={styles.filterTitleWithIcon}>
+          <FilterIcon size={18} /> Filter By:
+        </span>
+        <button
+          className={styles.toggleButton}
+          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+        >
+          {isMobileFilterOpen ? (
+            <ChevronUp size={18} />
+          ) : (
+            <ChevronDown size={18} />
+          )}
+        </button>
         <button className={styles.resetButton} onClick={resetFilters}>
           Reset
         </button>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Rating</h4>
-        {ratingOptions.map(({ label, value }) => (
-          <label key={label} className={styles.filterLabel}>
-            <input
-              type="radio"
-              name="rating"
-              value={value || ""}
-              checked={filters.rating === value}
-              onChange={() => handleChange("rating", value)}
-              className={styles.filterInput}
-            />
-            {label}
-          </label>
-        ))}
-      </div>
+      <button className={styles.mobileResetButton} onClick={resetFilters}>
+        Reset Filters
+      </button>
 
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Experience</h4>
-        {experienceOptions.map(({ label, value }) => (
-          <label key={label} className={styles.filterLabel}>
-            <input
-              type="radio"
-              name="experience"
-              value={value || ""}
-              checked={filters.experience === value}
-              onChange={() => handleChange("experience", value)}
-              className={styles.filterInput}
-            />
-            {label}
-          </label>
-        ))}
-      </div>
+      <div
+        className={`${styles.filterContent} ${
+          isMobileFilterOpen ? styles.open : ""
+        }`}
+      >
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Rating</h4>
+          {ratingOptions.map(({ label, value }) => (
+            <label key={label} className={styles.filterLabel}>
+              <input
+                type="radio"
+                name="rating"
+                value={value || ""}
+                checked={filters.rating === value}
+                onChange={() => handleChange("rating", value)}
+                className={styles.filterInput}
+              />
+              {label}
+            </label>
+          ))}
+        </div>
 
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Gender</h4>
-        {genderOptions.map((gender) => (
-          <label key={gender} className={styles.filterLabel}>
-            <input
-              type="radio"
-              name="gender"
-              value={gender}
-              checked={filters.gender === gender}
-              onChange={() => handleChange("gender", gender)}
-              className={styles.filterInput}
-            />
-            {gender}
-          </label>
-        ))}
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Experience</h4>
+          {experienceOptions.map(({ label, value }) => (
+            <label key={label} className={styles.filterLabel}>
+              <input
+                type="radio"
+                name="experience"
+                value={value || ""}
+                checked={filters.experience === value}
+                onChange={() => handleChange("experience", value)}
+                className={styles.filterInput}
+              />
+              {label}
+            </label>
+          ))}
+        </div>
+
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Gender</h4>
+          {genderOptions.map((gender) => (
+            <label key={gender} className={styles.filterLabel}>
+              <input
+                type="radio"
+                name="gender"
+                value={gender}
+                checked={filters.gender === gender}
+                onChange={() => handleChange("gender", gender)}
+                className={styles.filterInput}
+              />
+              {gender}
+            </label>
+          ))}
+        </div>
       </div>
     </div>
   );
