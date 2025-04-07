@@ -4,6 +4,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./AppointmentRequest.module.css";
 import Image from "next/image";
+import {
+  FaCalendarAlt,
+  FaClock,
+  FaMapMarkerAlt,
+  FaBriefcase,
+  FaMoneyBillWave,
+} from "react-icons/fa";
+import { MdSchedule } from "react-icons/md";
 
 const AppointmentRequest = () => {
   const searchParams = useSearchParams();
@@ -90,50 +98,99 @@ const AppointmentRequest = () => {
     }
   };
 
+  function formatTimeTo12Hour(time) {
+    const [hourStr, minute] = time.split(":");
+    let hour = parseInt(hourStr, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${ampm}`;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.subContainer}>
-        <h1 className={styles.title}>Confirm Appointment Request</h1>
+        <h1 className={styles.title}>Confirm Appointment</h1>
         <p className={styles.detail}>
-          Please review the details before confirming.
+          Please review your appointment details before confirming
         </p>
 
-        {error && <p className={styles.error}>{error}</p>}
+        {error && (
+          <div className={styles.errorContainer}>
+            <p className={styles.error}>{error}</p>
+          </div>
+        )}
 
         {doctor ? (
           <div className={styles.doctorCard}>
-            <Image
-              width={200}
-              height={200}
-              src={doctor.photo_path}
-              alt={doctor.name}
-              className={styles.doctorImage}
-            />
+            <div className={styles.doctorImageContainer}>
+              <Image
+                width={200}
+                height={200}
+                src={doctor.photo_path}
+                alt={doctor.name}
+                className={styles.doctorImage}
+              />
+            </div>
             <div className={styles.doctorInfo}>
               <h3 className={styles.doctorName}>{doctor.name}</h3>
               <p className={styles.specialty}>{doctor.specialty}</p>
-              <p className={styles.location}>{doctor.location}</p>
-              <p className={styles.experience}>
-                Experience: {doctor.experience} years
-              </p>
-              <p className={styles.fee}>Fee: ₹{doctor.consultation_fee}</p>
+              <div className={styles.infoItem}>
+                <FaMapMarkerAlt className={styles.icon} />
+                <span>{doctor.location}</span>
+              </div>
+              <div className={styles.infoItem}>
+                <FaBriefcase className={styles.icon} />
+                <span>{doctor.experience} years experience</span>
+              </div>
+              <div className={styles.infoItem}>
+                <FaMoneyBillWave className={styles.icon} />
+                <span>₹{doctor.consultation_fee}</span>
+              </div>
             </div>
           </div>
         ) : (
-          <p>Loading doctor details...</p>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingSpinner}></div>
+            <p>Loading doctor details...</p>
+          </div>
         )}
 
         <div className={styles.appointmentInfo}>
           <h2 className={styles.sectionTitle}>Appointment Details</h2>
-          <p className={styles.info}>
-            <strong>Date:</strong> {date}
-          </p>
-          <p className={styles.info}>
-            <strong>Time:</strong> {time}
-          </p>
-          <p className={styles.info}>
-            <strong>Time Slot ID:</strong> {timeSlotId}
-          </p>
+          <div className={styles.appointmentGrid}>
+            <div className={styles.appointmentItem}>
+              <div className={styles.appointmentIcon}>
+                <FaCalendarAlt />
+              </div>
+              <div>
+                <p className={styles.appointmentLabel}>Date</p>
+                <p className={styles.appointmentValue}>{date}</p>
+              </div>
+            </div>
+
+            <div className={styles.appointmentItem}>
+              <div className={styles.appointmentIcon}>
+                <FaClock />
+              </div>
+              <div>
+                <p className={styles.appointmentLabel}>Time</p>
+                <p className={styles.appointmentValue}>
+                  {" "}
+                  {formatTimeTo12Hour(time)}
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.appointmentItem}>
+              <div className={styles.appointmentIcon}>
+                <MdSchedule />
+              </div>
+              <div>
+                <p className={styles.appointmentLabel}>Consultation Type</p>
+                <p className={styles.appointmentValue}>{consultationType}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <button
@@ -141,7 +198,14 @@ const AppointmentRequest = () => {
           onClick={handleConfirm}
           disabled={loading}
         >
-          {loading ? "Submitting..." : "Confirm Appointment"}
+          {loading ? (
+            <>
+              <div className={styles.buttonSpinner}></div>
+              <span>Processing...</span>
+            </>
+          ) : (
+            "Confirm Appointment"
+          )}
         </button>
       </div>
     </div>
