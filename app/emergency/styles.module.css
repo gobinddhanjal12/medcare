@@ -25,7 +25,7 @@
   margin-bottom: 32px;
   border-radius: 16px;
   background-color: #e9f5ee;
-  padding: 24px;
+  padding: 24px 12px;
   box-shadow: 0 4px 6px rgba(28, 74, 42, 0.1);
   border: 1px solid #c6e0d3;
 }
@@ -34,7 +34,7 @@
   margin-bottom: 32px;
   border-radius: 16px;
   background-color: white;
-  padding: 24px;
+  padding: 24px 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid #c6e0d3;
 }
@@ -76,5 +76,13 @@
 
   .contactsGrid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .emergencySection{
+    padding: 24px;
+  }
+
+  .section{
+    padding: 24px;
   }
 }
