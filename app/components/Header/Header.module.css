@@ -1,5 +1,5 @@
 .header {
-  background: #f6f6f6;
+  background: #fbfbfb;
   padding: 32px 24px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -163,7 +163,7 @@
   }
 
   .header {
-    padding: 40px 24px;
+
     padding-left: 60px;
     padding-right: 60px;
   }

@@ -121,10 +121,6 @@ export default function Login() {
             Reset
           </button>
 
-          <div className={styles.forgetPassword}>
-            <Link href="/forgot-password">Forgot Password?</Link>
-          </div>
-
           <div className={styles.separator}>
             <span>or</span>
           </div>
@@ -137,6 +133,10 @@ export default function Login() {
             <FcGoogle size={18} className={styles.googleIcon} /> Continue with
             Google
           </button>
+
+          <div className={styles.forgetPassword}>
+            <Link href="/forgot-password">Forgot Password?</Link>
+          </div>
         </form>
       </div>
     </div>

@@ -36,7 +36,7 @@
 }
 
 .slotButton {
-  padding: 8px;
+  padding: 8px 2px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background: white;

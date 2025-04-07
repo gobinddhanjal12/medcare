@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url("/images/login-img.png") center/cover no-repeat;
+  background: url("/images/login-img.jpg") center/cover no-repeat;
 }
 
 .card {
