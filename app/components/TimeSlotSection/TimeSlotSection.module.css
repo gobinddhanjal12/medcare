@@ -1,7 +1,7 @@
 .slotSection {
   margin-top: 20px;
   box-shadow: 1px 1px 10px #00000011;
-  padding: 15px;
+  padding: 16px 8px;
   border-radius: 10px;
 }
 
@@ -53,4 +53,10 @@
   background: #ddd;
   color: gray;
   cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .slotSection {
+    padding: 15px;
+  }
 }

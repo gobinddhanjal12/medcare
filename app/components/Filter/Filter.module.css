@@ -51,6 +51,7 @@
   border: 1px solid #eee;
   margin-top: 10px;
   border-radius: 8px;
+  position: relative;
 }
 
 .filterContent.open {

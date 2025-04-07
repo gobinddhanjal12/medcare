@@ -1,8 +1,8 @@
 .container {
-  padding: 20px;
+  padding: 10px;
   background: #fff;
   border-radius: 10px;
-  margin: 20px 32px;
+  margin: 20px 10px;
 }
 
 .box {
@@ -19,15 +19,7 @@
 }
 
 .bookButton {
-  background-color: #1f5221;
-  color: white;
-  padding: 10px 24px;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-left: auto;
+  display: none;
 }
 
 .tabContainer {
@@ -134,4 +126,24 @@
   position: absolute;
   right: 0;
   padding: 20px 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 20px 32px;
+    padding: 20px;
+  }
+
+  .bookButton {
+    display: block;
+    background-color: #1f5221;
+    color: white;
+    padding: 10px 24px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: auto;
+  }
 }

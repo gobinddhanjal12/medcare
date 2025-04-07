@@ -23,7 +23,7 @@ const HomePage = () => {
       </div>
       <div className={styles.right}>
         <Image
-          src="/images/homepage.jpg"
+          src="/images/homepage1.jpg"
           alt="healthcare"
           fill
           style={{ objectFit: "cover", scale: 1.4 }}
