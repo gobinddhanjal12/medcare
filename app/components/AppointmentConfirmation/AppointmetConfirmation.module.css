@@ -1,6 +1,4 @@
 .pageContainer {
-  min-height: 100vh;
-  background-color: #f5f8f6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,6 +113,7 @@
   align-items: center;
   width: 32px;
   height: 32px;
+  padding: 6px;
   border-radius: 50%;
   background-color: #1c4a2a;
   color: white;
@@ -161,7 +160,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  padding: 0 30px;
+  padding: 0 20px;
 }
 
 .detailItem {
@@ -267,6 +266,5 @@
 
   .successBanner {
     padding: 20px;
-    margin: 30px;
   }
 }
