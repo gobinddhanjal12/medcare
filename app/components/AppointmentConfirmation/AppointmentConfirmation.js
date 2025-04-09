@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import styles from "./AppointmetConfirmation.module.css";
+import styles from "./AppointmentConfirmation.module.css";
 import {
   Calendar,
   Clock,
