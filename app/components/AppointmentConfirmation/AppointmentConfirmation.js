@@ -3,6 +3,21 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import styles from "./AppointmetConfirmation.module.css";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  User,
+  Mail,
+  DollarSign,
+  CheckCircle,
+  AlertCircle,
+  Home,
+  Stethoscope,
+  Video,
+  IndianRupee,
+} from "lucide-react";
+import { formatTime } from "@/app/utils/formatTime";
 
 const AppointmentConfirmation = () => {
   const searchParams = useSearchParams();
@@ -53,57 +68,161 @@ const AppointmentConfirmation = () => {
     }
   }, [appointmentId]);
 
+  const getConsultationTypeIcon = (type) => {
+    if (type?.toLowerCase().includes("video")) return <Video size={18} />;
+    if (type?.toLowerCase().includes("online")) return <Video size={18} />;
+    return <Stethoscope size={18} />;
+  };
+
   return (
-    <Suspense fallback={<p>Loading appointment details...</p>}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Appointment Confirmation</h1>
+    <Suspense
+      fallback={
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+        </div>
+      }
+    >
+      <div className={styles.pageContainer}>
+        <div className={styles.container}>
+          <div className={styles.card}>
+            <div className={styles.header}>
+              <h1 className={styles.title}>Appointment Confirmation</h1>
+              <div className={styles.accent}></div>
+            </div>
 
-        {loading && (
-          <p className={styles.loading}>Loading appointment details...</p>
-        )}
-        {error && <p className={styles.error}>{error}</p>}
+            {loading && (
+              <div className={styles.loadingContainer}>
+                <div className={styles.spinner}></div>
+              </div>
+            )}
 
-        {appointment && (
-          <div className={styles.details}>
-            <p className={styles.success}>
-              Your appointment request has been submitted
-            </p>
+            {error && (
+              <div className={styles.errorContainer}>
+                <div className={styles.errorIcon}>
+                  <AlertCircle size={24} />
+                </div>
+                <p className={styles.errorMessage}>{error}</p>
+              </div>
+            )}
 
-            <p className={styles.info}>
-              <strong>Doctor:</strong> {appointment.doctor_name} (
-              {appointment.specialty})
-            </p>
-            <p className={styles.info}>
-              <strong>Location:</strong> {appointment.location}
-            </p>
-            <p className={styles.info}>
-              <strong>Consultation Fee:</strong> ₹{appointment.consultation_fee}
-            </p>
-            <p className={styles.info}>
-              <strong>Patient:</strong> {appointment.patient_name} (
-              {appointment.patient_email})
-            </p>
-            <p className={styles.info}>
-              <strong>Appointment Date:</strong>{" "}
-              {appointment.appointment_date.split("T")[0]}
-            </p>
-            <p className={styles.info}>
-              <strong>Time:</strong> {appointment.start_time} -{" "}
-              {appointment.end_time}
-            </p>
-            <p className={styles.info}>
-              <strong>Consultation Type:</strong>{" "}
-              {appointment.consultation_type}
-            </p>
+            {appointment && (
+              <div className={styles.details}>
+                <div className={styles.successBanner}>
+                  <div className={styles.checkIcon}>
+                    <CheckCircle size={20} />
+                  </div>
+                  <p className={styles.successMessage}>
+                    Your appointment has been successfully scheduled
+                  </p>
+                </div>
 
-            <button
-              className={styles.homeButton}
-              onClick={() => router.push("/")}
-            >
-              Go Back Home
-            </button>
+                <div className={styles.sectionDivider}>
+                  <span>Appointment Details</span>
+                </div>
+
+                <div className={styles.detailsGrid}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      <Stethoscope size={16} className={styles.iconLabel} />
+                      Doctor
+                    </span>
+                    <span className={styles.detailValue}>
+                      {appointment.doctor_name}
+                    </span>
+                    <span className={styles.detailSecondary}>
+                      {appointment.specialty}
+                    </span>
+                  </div>
+
+                  {appointment.consultation_type === "offline" && (
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>
+                        <MapPin size={16} className={styles.iconLabel} />
+                        Location
+                      </span>
+                      <span className={styles.detailValue}>
+                        {appointment.location}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      <IndianRupee size={16} className={styles.iconLabel} />
+                      Consultation Fee
+                    </span>
+                    <span className={styles.detailValue}>
+                      ₹{appointment.consultation_fee}
+                    </span>
+                  </div>
+
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      <User size={16} className={styles.iconLabel} />
+                      Patient
+                    </span>
+                    <div className={styles.patientInfo}>
+                      <span className={styles.detailValue}>
+                        {appointment.patient_name}
+                      </span>
+                      <span className={styles.detailSecondary}>
+                        <Mail size={14} className={styles.inlineIcon} />
+                        {appointment.patient_email}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      <Calendar size={16} className={styles.iconLabel} />
+                      Date
+                    </span>
+                    <span className={styles.detailValue}>
+                      {new Date(
+                        appointment.appointment_date
+                      ).toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
+
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      <Clock size={16} className={styles.iconLabel} />
+                      Time
+                    </span>
+                    <span className={styles.detailValue}>
+                      {formatTime(appointment.start_time)}
+                    </span>
+                  </div>
+
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>
+                      {getConsultationTypeIcon(appointment.consultation_type)}
+                      <span className={styles.labelText}>Type</span>
+                    </span>
+                    <span className={styles.detailValue}>
+                      {appointment.consultation_type}
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.actions}>
+                  <button
+                    className={styles.primaryButton}
+                    onClick={() => router.push("/")}
+                  >
+                    <Home size={18} className={styles.buttonIcon} />
+                    Return to Home
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </Suspense>
   );
