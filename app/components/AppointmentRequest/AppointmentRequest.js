@@ -12,6 +12,7 @@ import {
   FaMoneyBillWave,
 } from "react-icons/fa";
 import { MdSchedule } from "react-icons/md";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const AppointmentRequest = () => {
   const searchParams = useSearchParams();
@@ -149,10 +150,7 @@ const AppointmentRequest = () => {
             </div>
           </div>
         ) : (
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingSpinner}></div>
-            <p>Loading doctor details...</p>
-          </div>
+          <LoadingSpinner />
         )}
 
         <div className={styles.appointmentInfo}>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import DoctorCard from "../Card/DoctorCard";
 import Filter from "../Filter/Filter";
 import Pagination from "../Pagination/Pagination";
 import styles from "./DoctorList.module.css";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const DoctorList = ({ filters }) => {
   const [doctors, setDoctors] = useState([]);
@@ -67,8 +68,14 @@ const DoctorList = ({ filters }) => {
       params.set("rating", filters.rating.split(" ")[0] || filters.rating);
     }
 
-    if (typeof filters.experience === "string" && filters.experience !== "Show all") {
-      params.set("experience", filters.experience.split(" ")[0] || filters.experience);
+    if (
+      typeof filters.experience === "string" &&
+      filters.experience !== "Show all"
+    ) {
+      params.set(
+        "experience",
+        filters.experience.split(" ")[0] || filters.experience
+      );
     }
 
     if (typeof filters.gender === "string" && filters.gender !== "Show All") {
@@ -79,35 +86,29 @@ const DoctorList = ({ filters }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>
-        {loading ? "Loading doctors..." : `${totalDoctors} doctors available`}
-      </h1>
-      <p className={styles.para}>
-        Book appointments with minimum wait-time & verified doctor details
-      </p>
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>{totalDoctors} doctors available</h1>
+        <p className={styles.para}>
+          Book appointments with minimum wait-time & verified doctor details
+        </p>
 
-      <div className={styles.subContainer}>
-        <div className={styles.left}>
-          <Filter onFilterChange={handleFilterChange} />
-        </div>
-        <div className={styles.right}>
-          {error ? (
-            <p className={styles.error}>{error}</p>
-          ) : loading ? (
-            <p className={styles.loading}>Fetching doctors...</p>
-          ) : (
+        <div className={styles.subContainer}>
+          <div className={styles.left}>
+            <Filter onFilterChange={handleFilterChange} />
+          </div>
+          <div className={styles.right}>
             <div className={styles.cardContainer}>
               {doctors.map((doctor) => (
                 <DoctorCard key={doctor.id} doctor={doctor} />
               ))}
             </div>
-          )}
+          </div>
         </div>
-      </div>
 
-      <Pagination totalPages={totalPages} />
-    </div>
+        <Pagination totalPages={totalPages} />
+      </div>
+    </Suspense>
   );
 };
 

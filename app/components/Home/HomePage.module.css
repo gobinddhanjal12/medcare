@@ -8,7 +8,7 @@
   flex: 50%;
   overflow: hidden;
   min-height: 100vh;
-  background: #12371ebf;
+  background: #0c3318db;
   align-content: center;
   color: #ffffffdf;
   line-height: 1.4;
@@ -21,6 +21,12 @@
 .title {
   font-size: 80px;
   font-weight: 500;
+  animation: slideInLeft 1.2s ease forwards;
+}
+
+.description,
+.button {
+  animation: fadeUp 1.2s ease;
 }
 
 .description {
@@ -41,6 +47,28 @@
   height: 100%;
   width: 100%;
   z-index: 1;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @media (min-width: 768px) {

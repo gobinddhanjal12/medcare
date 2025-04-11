@@ -80,6 +80,10 @@
   cursor: pointer;
 }
 
+.error{
+  color: #f70000;
+}
+
 .dropdownWrapper .icon {
   position: absolute;
   top: 60%;

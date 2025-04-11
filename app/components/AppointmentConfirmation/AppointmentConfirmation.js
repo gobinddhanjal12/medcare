@@ -18,6 +18,7 @@ import {
   IndianRupee,
 } from "lucide-react";
 import { formatTime } from "@/app/utils/formatTime";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const AppointmentConfirmation = () => {
   const searchParams = useSearchParams();
@@ -75,13 +76,7 @@ const AppointmentConfirmation = () => {
   };
 
   return (
-    <Suspense
-      fallback={
-        <div className={styles.loadingContainer}>
-          <div className={styles.spinner}></div>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingSpinner />}>
       <div className={styles.pageContainer}>
         <div className={styles.container}>
           <div className={styles.card}>
@@ -90,11 +85,7 @@ const AppointmentConfirmation = () => {
               <div className={styles.accent}></div>
             </div>
 
-            {loading && (
-              <div className={styles.loadingContainer}>
-                <div className={styles.spinner}></div>
-              </div>
-            )}
+            {loading && <LoadingSpinner />}
 
             {error && (
               <div className={styles.errorContainer}>

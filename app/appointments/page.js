@@ -5,12 +5,13 @@ import styles from "./styles.module.css";
 import SearchBar from "../components/SearchBar/SearchBar";
 import DoctorList from "../components/DoctorList/DoctorList";
 import { Suspense } from "react";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 export default function AvailableDoctors() {
   const [filters, setFilters] = useState({});
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <div>
         <div className={styles.search}>
           <h1 className={styles.title}>Find a doctor at your own ease</h1>

@@ -44,7 +44,7 @@ const SearchBar = ({ setFilters }) => {
       <Search className={styles.icon} />
       <input
         type="text"
-        placeholder="Search doctors by name..."
+        placeholder="Search doctors"
         className={styles.input}
         value={query}
         onChange={(e) => setQuery(e.target.value)}

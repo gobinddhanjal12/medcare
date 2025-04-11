@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { format } from "date-fns";
 import styles from "./ScheduleAppointment.module.css";
 import {
@@ -11,6 +11,7 @@ import {
 import DateScroller from "../DateScroller/DateScroller";
 import TimeSlotSection from "../TimeSlotSection/TimeSlotSection";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ScheduleAppointment = ({ doctorId }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -55,7 +56,7 @@ const ScheduleAppointment = ({ doctorId }) => {
       );
 
       if (!response.ok) throw new Error("Failed to fetch slots");
-      const result = await response.json();      
+      const result = await response.json();
 
       const availableSlots = result.data.map((slot) =>
         slot.start_time.slice(0, 5)
@@ -164,94 +165,99 @@ const ScheduleAppointment = ({ doctorId }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.box}>
-        <h2 className={styles.title}>Schedule Appointment</h2>
-        <button className={styles.bookButton} onClick={handleNext}>
-          Book Appointment
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className={styles.container}>
+        <div className={styles.box}>
+          <h2 className={styles.title}>Schedule Appointment</h2>
+          <button className={styles.bookButton} onClick={handleNext}>
+            Book Appointment
+          </button>
+        </div>
+
+        <div className={styles.tabContainer}>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "video" ? styles.activeTab : ""
+            }`}
+            onClick={() => handleTabClick("video")}
+          >
+            Book Video Consult
+          </button>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "hospital" ? styles.activeTab : ""
+            }`}
+            onClick={() => handleTabClick("hospital")}
+          >
+            Book Hospital Visit
+          </button>
+        </div>
+
+        <div className={styles.dropdownWrapper}>
+          <select
+            className={styles.dropdown}
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
+            {doctorLocation && (
+              <option value={doctorId}>{doctorLocation}</option>
+            )}
+          </select>
+          <ChevronDown className={styles.icon} size={28} />
+        </div>
+
+        <div className={styles.dateHeader}>
+          <button
+            className={styles.dateButton}
+            onClick={() => changeMonth(-1)}
+            disabled={date.getMonth() === new Date().getMonth()}
+          >
+            <CircleChevronLeft size={28} className={styles.icon} />
+          </button>
+          <h3 className={styles.heading}>
+            {date.toLocaleString("default", { month: "long" })}{" "}
+            {date.getFullYear()}
+          </h3>
+          <button className={styles.dateButton} onClick={() => changeMonth(1)}>
+            <CircleChevronRight size={28} className={styles.icon} />
+          </button>
+        </div>
+
+        <DateScroller
+          dates={dates}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+
+        {loading && <LoadingSpinner />}
+        {error && <p className={styles.error}>{error}</p>}
+
+        {slotError && <p className={styles.error}>{slotError}</p>}
+
+        {!loading && !error && (
+          <>
+            <TimeSlotSection
+              title="Morning"
+              icon="Sun"
+              slots={morningSlots}
+              selectedSlot={selectedSlot}
+              setSelectedSlot={setSelectedSlot}
+            />
+            <TimeSlotSection
+              title="Afternoon"
+              icon="Sunset"
+              slots={afternoonSlots}
+              selectedSlot={selectedSlot}
+              setSelectedSlot={setSelectedSlot}
+            />
+          </>
+        )}
+
+        <button className={styles.nextButton} onClick={handleNext}>
+          Next
         </button>
       </div>
-
-      <div className={styles.tabContainer}>
-        <button
-          className={`${styles.tab} ${
-            activeTab === "video" ? styles.activeTab : ""
-          }`}
-          onClick={() => handleTabClick("video")}
-        >
-          Book Video Consult
-        </button>
-        <button
-          className={`${styles.tab} ${
-            activeTab === "hospital" ? styles.activeTab : ""
-          }`}
-          onClick={() => handleTabClick("hospital")}
-        >
-          Book Hospital Visit
-        </button>
-      </div>
-
-      <div className={styles.dropdownWrapper}>
-        <select
-          className={styles.dropdown}
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-        >
-          {doctorLocation && <option value={doctorId}>{doctorLocation}</option>}
-        </select>
-        <ChevronDown className={styles.icon} size={28} />
-      </div>
-
-      <div className={styles.dateHeader}>
-        <button
-          className={styles.dateButton}
-          onClick={() => changeMonth(-1)}
-          disabled={date.getMonth() === new Date().getMonth()}
-        >
-          <CircleChevronLeft size={28} className={styles.icon} />
-        </button>
-        <h3 className={styles.heading}>
-          {date.toLocaleString("default", { month: "long" })}{" "}
-          {date.getFullYear()}
-        </h3>
-        <button className={styles.dateButton} onClick={() => changeMonth(1)}>
-          <CircleChevronRight size={28} className={styles.icon} />
-        </button>
-      </div>
-
-      <DateScroller
-        dates={dates}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-      />
-
-      {loading && <p className={styles.loading}>Loading slots...</p>}
-      {error && <p className={styles.error}>{error}</p>}
-
-      {!loading && !error && (
-        <>
-          <TimeSlotSection
-            title="Morning"
-            icon="Sun"
-            slots={morningSlots}
-            selectedSlot={selectedSlot}
-            setSelectedSlot={setSelectedSlot}
-          />
-          <TimeSlotSection
-            title="Afternoon"
-            icon="Sunset"
-            slots={afternoonSlots}
-            selectedSlot={selectedSlot}
-            setSelectedSlot={setSelectedSlot}
-          />
-        </>
-      )}
-
-      <button className={styles.nextButton} onClick={handleNext}>
-        Next
-      </button>
-      {slotError && <p className={styles.error}>{slotError}</p>}
-    </div>
+    </Suspense>
   );
 };
 
