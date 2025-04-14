@@ -103,11 +103,11 @@
 
 .bookButton {
   width: 100%;
-  padding: 16px 8px;
+  padding: 12px 4px;
   margin-top: auto;
   background: transparent;
   border: 1px solid #00000021;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
@@ -158,5 +158,6 @@
 
   .bookButton {
     padding: 20px 10px;
+    font-size: 16px;
   }
 }
