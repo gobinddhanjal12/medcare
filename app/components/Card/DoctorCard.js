@@ -25,8 +25,22 @@ const DoctorCard = ({ doctor }) => {
     router.push(`/book-appointment/${id}`);
   };
 
-  const handleCardClick = () => {
-    router.push(`/doctor-details/${id}`);
+  const handleCardClick = (e) => {
+    const card = e.currentTarget;
+
+    const ripple = document.createElement("span");
+    ripple.className = styles.ripple;
+
+    const rect = card.getBoundingClientRect();
+    ripple.style.left = `${e.clientX - rect.left}px`;
+    ripple.style.top = `${e.clientY - rect.top}px`;
+
+    card.appendChild(ripple);
+
+    setTimeout(() => {
+      ripple.remove();
+      router.push(`/doctor-details/${id}`);
+    }, 300);
   };
 
   return (
