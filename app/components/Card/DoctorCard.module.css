@@ -1,7 +1,7 @@
 .card {
   line-height: 1.5;
   border-radius: 12px;
-  padding: 16px;
+  padding: 8px;
   text-align: center;
   background: #ffffff;
   border: 1px solid #0000001f;
@@ -11,6 +11,14 @@
   cursor: pointer;
 }
 
+.cardBottom {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  padding-top: 8px;
+  width: 100%;
+}
+
 .emptyStar {
   color: #f39c12;
   width: 16px;
@@ -18,7 +26,7 @@
 }
 
 .profileImage {
-  margin-top: 20px;
+  margin-top: 8px;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -26,18 +34,20 @@
 }
 
 .name {
-  margin: 12px 0;
-  font-size: 24px;
+  margin: 8px 0;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .details {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   font-size: 12px;
   color: #6c757d;
   margin-bottom: 10px;
+  align-items: center;
+  flex-direction: column;
 }
 
 .detail {
@@ -52,7 +62,7 @@
 }
 
 .ratings {
-  margin: 50px auto;
+  margin: 16px auto;
   font-size: 14px;
   color: #444;
   display: flex;
@@ -70,7 +80,7 @@
 
 .bookButton {
   width: 100%;
-  padding: 20px 10px;
+  padding: 16px 8px;
   margin-top: auto;
   background: transparent;
   border: 1px solid #00000021;
@@ -79,10 +89,51 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .bookButton:hover {
   background-color: #2e7d32;
   color: white;
+}
+.ratings span {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+  .ratings span {
+    display: flex;
+  }
+  .details {
+    flex-direction: row;
+  }
+
+  .cardBottom {
+    padding-top: 20px;
+  }
+
+  .profileImage {
+    margin-top: 20px;
+  }
+
+  .ratings {
+    margin: 28px auto;
+  }
+
+  .name {
+    margin: 12px 0;
+    font-size: 24px;
+  }
+
+  .details {
+    font-size: 12px;
+    gap: 12px;
+  }
+
+  .bookButton {
+    padding: 20px 10px;
+  }
 }

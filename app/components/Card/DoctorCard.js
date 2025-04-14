@@ -47,22 +47,25 @@ const DoctorCard = ({ doctor }) => {
           <Clock className={styles.icon} /> {experience} Years
         </span>
       </div>
-      <div className={styles.ratings}>
-        <span>Ratings: </span>
-        {Array.from({ length: filledStars }, (_, i) => (
-          <Star key={i} className={styles.star} />
-        ))}
-        {Array.from({ length: emptyStars }, (_, i) => (
-          <Star key={`empty-${i}`} className={styles.emptyStar} />
-        ))}
+
+      <div className={styles.cardBottom}>
+        <div className={styles.ratings}>
+          <span>Ratings: </span>
+          {Array.from({ length: filledStars }, (_, i) => (
+            <Star key={i} className={styles.star} />
+          ))}
+          {Array.from({ length: emptyStars }, (_, i) => (
+            <Star key={`empty-${i}`} className={styles.emptyStar} />
+          ))}
+        </div>
+        <button
+          className={styles.bookButton}
+          onClick={handleBookAppointment}
+          aria-label="Book Appointment"
+        >
+          Book Appointment
+        </button>
       </div>
-      <button
-        className={styles.bookButton}
-        onClick={handleBookAppointment}
-        aria-label="Book Appointment"
-      >
-        Book Appointment
-      </button>
     </div>
   );
 };
