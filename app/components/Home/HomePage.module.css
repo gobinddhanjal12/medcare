@@ -45,7 +45,7 @@
   height: 600px;
   width: 600px;
   border-radius: 120px;
-  top: -180px;
+  top: -360px;
   left: -180px;
   background: #d9ff001b;
   animation: spin 20s linear infinite;
@@ -57,9 +57,9 @@
   height: 800px;
   width: 800px;
   border-radius: 200px;
-  top: -150px;
+  top: -280px;
   left: -150px;
-  background: #68ff0010;
+  background: #66ff001b;
   animation: spin 40s linear infinite;
   z-index: 0;
 }
@@ -124,5 +124,15 @@
   .right {
     min-height: 100vh;
     position: relative;
+  }
+
+  .box1 {
+    top: -180px;
+    left: -180px;
+  }
+
+  .box2 {
+    top: -150px;
+    left: -150px;
   }
 }

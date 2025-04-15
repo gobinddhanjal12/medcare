@@ -40,11 +40,11 @@ const DoctorCard = ({ doctor }) => {
     setTimeout(() => {
       ripple.remove();
       router.push(`/doctor-details/${id}`);
-    }, 300);
+    }, 100);
   };
 
   return (
-    <div className={styles.card} >
+    <div className={styles.card}>
       <div className={styles.content} onClick={handleCardClick}>
         <Image
           width={200}
