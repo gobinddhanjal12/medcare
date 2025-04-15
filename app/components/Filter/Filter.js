@@ -88,16 +88,22 @@ const Filter = ({ onFilterChange }) => {
     updateURLParams(defaultFilters);
   };
 
+  const handleMobileToggle = () => {
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      setIsMobileFilterOpen((prev) => !prev);
+    }
+  };
+
   return (
     <div className={styles.filterContainer}>
-      <div className={styles.filterHeader}>
+      <div
+        className={`${styles.filterHeader} ${styles.filterHeaderMobile}`}
+        onClick={handleMobileToggle}
+      >
         <span className={styles.filterTitleWithIcon}>
           <FilterIcon size={18} /> Filter By:
         </span>
-        <button
-          className={styles.toggleButton}
-          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-        >
+        <button className={styles.toggleButton}>
           {isMobileFilterOpen ? (
             <ChevronUp size={18} />
           ) : (
