@@ -40,7 +40,7 @@ const DoctorCard = ({ doctor }) => {
     setTimeout(() => {
       ripple.remove();
       router.push(`/doctor-details/${id}`);
-    }, 100);
+    }, 300);
   };
 
   return (
