@@ -85,6 +85,12 @@ const DoctorList = ({ filters }) => {
     router.push(`?${params.toString()}`);
   };
 
+  {
+    if (loading) {
+      return <LoadingSpinner />;
+    }
+  }
+
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <div className={styles.container}>

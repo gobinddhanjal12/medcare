@@ -14,6 +14,7 @@ import {
   StickyNote,
   Tag,
 } from "lucide-react";
+import LoadingSpinner from "@/app/components/LoadingSpinner/LoadingSpinner";
 
 const DoctorDetails = () => {
   const { id } = useParams();
@@ -44,7 +45,11 @@ const DoctorDetails = () => {
   }, [id]);
 
   if (loading)
-    return <p className={styles.loading}>Loading doctor details...</p>;
+    return (
+      <div className={styles.loadingContainer}>
+        <LoadingSpinner />
+      </div>
+    );
   if (error) return <p className={styles.error}>Error: {error}</p>;
   if (!doctor) return <p className={styles.error}>Doctor not found</p>;
 
