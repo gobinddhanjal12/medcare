@@ -8,6 +8,8 @@ const HomePage = () => {
   return (
     <div className={styles.home}>
       <div className={styles.left}>
+        <div className={styles.box1}></div>
+        <div className={styles.box2}></div>
         <h1 className={styles.title}>Health in Your Hands.</h1>
         <p className={styles.description}>
           Take control of your healthcare with CareMate. Book appointments with
