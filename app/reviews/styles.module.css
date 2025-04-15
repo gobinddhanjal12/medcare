@@ -39,6 +39,14 @@
   gap: 10px;
 }
 
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+}
+
 .pageButton {
   background-color: var(--primary-color);
   color: white;

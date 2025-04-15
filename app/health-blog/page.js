@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import BlogCard from "../components/BlogCard/BlogCard";
 import styles from "./styles.module.css";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 const API_URL = `https://newsapi.org/v2/top-headlines?category=health&country=us&pageSize=10&apiKey=${API_KEY}`;
@@ -38,7 +39,7 @@ const HealthBlogs = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <p>Loading health blogs...</p>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <p>Error: {error}</p>;
 
   return (

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { AppointmentCard } from "../components/AppointmentCard/AppointmentCard";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -57,7 +58,7 @@ const UserAppointments = () => {
       <h1 className={styles.title}>My Appointments</h1>
 
       {loading ? (
-        <p>Loading appointments...</p>
+        <LoadingSpinner />
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : appointments.length > 0 ? (

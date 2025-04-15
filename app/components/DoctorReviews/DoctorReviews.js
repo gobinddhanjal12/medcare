@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./DoctorReviews.module.css";
 import ReviewCard from "../ReviewCard/ReviewCard";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const DoctorReviews = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const DoctorReviews = () => {
     if (id) fetchReviews();
   }, [id]);
 
-  if (loading) return <p className={styles.loading}>Loading reviews...</p>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (

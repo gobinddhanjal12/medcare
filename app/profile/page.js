@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -55,7 +56,12 @@ const ProfilePage = () => {
     window.location.href = "/login";
   };
 
-  if (loading) return <p>Loading profile...</p>;
+  if (loading)
+    return (
+      <div className={styles.loadingContainer}>
+        <LoadingSpinner />
+      </div>
+    );
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (

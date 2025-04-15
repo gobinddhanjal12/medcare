@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import DoctorReviewCard from "../components/DoctorReviewCard/DoctorReviewCard";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const ReviewsPage = () => {
   const [reviews, setReviews] = useState([]);
@@ -36,7 +37,13 @@ const ReviewsPage = () => {
     fetchReviews();
   }, [page, sort]);
 
-  if (loading) return <p className={styles.loading}>Loading reviews...</p>;
+  if (loading)
+    return (
+      <div className={styles.loadingContainer}>
+        <LoadingSpinner />
+      </div>
+    );
+
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (

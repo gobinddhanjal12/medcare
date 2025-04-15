@@ -91,11 +91,19 @@
   margin-bottom: 20px;
 }
 
-.name{
+.name {
   text-transform: capitalize;
 }
 
-.logoutBtn{
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.logoutBtn {
   background: var(--primary-color);
   color: #fff;
 }
