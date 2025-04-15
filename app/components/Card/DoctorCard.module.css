@@ -1,18 +1,70 @@
-.card {
+.card,
+.content {
   line-height: 1.5;
   border-radius: 12px;
-  padding: 8px;
+  padding: 2px;
   overflow: hidden;
-  position: relative;
   user-select: none;
   text-align: center;
-  background: #ffffff;
+  position: relative;
   border: 1px solid #0000001f;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+
   -webkit-tap-highlight-color: transparent;
+}
+
+.content {
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: none;
+  z-index: 1;
+}
+
+.card::before {
+  opacity: 0;
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 200px;
+  height: 800px;
+  bottom: -40%;
+  background: linear-gradient(#1c4a2a, #63ed8c);
+  transition: opacity 300ms;
+  animation: rotation_9018 8000ms infinite linear;
+  animation-play-state: paused;
+  filter: blur(40px);
+}
+
+.card:hover::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.card::after {
+  position: absolute;
+  content: " ";
+  display: block;
+  /* width: 250px;
+  height: 360px; */
+  backdrop-filter: blur(50px);
+}
+
+@keyframes rotation_9018 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .ripple {
@@ -124,13 +176,17 @@
 
 @media (min-width: 768px) {
   .card {
-    padding: 16px;
+    padding: 2px;
   }
   .ratings span {
     display: flex;
   }
   .details {
     flex-direction: row;
+  }
+
+  .content {
+    padding: 16px;
   }
 
   .cardBottom {
