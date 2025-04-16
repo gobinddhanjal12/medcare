@@ -25,6 +25,7 @@
   overflow: hidden;
   border: none;
   z-index: 1;
+  outline: none;
 }
 
 .card::before {
@@ -32,10 +33,12 @@
   content: " ";
   position: absolute;
   display: block;
-  width: 200px;
+  width: 100px;
+  border: none;
+  outline: none;
   height: 800px;
   bottom: -40%;
-  background: linear-gradient(#1c4a2a, #63ed8c);
+  background: linear-gradient(#1c4a2a, #2dc75c);
   transition: opacity 300ms;
   animation: rotation_9018 8000ms infinite linear;
   animation-play-state: paused;
@@ -176,6 +179,9 @@
 @media (min-width: 768px) {
   .card {
     padding: 2px;
+  }
+  .card::before {
+    width: 180px;
   }
   .ratings span {
     display: flex;
