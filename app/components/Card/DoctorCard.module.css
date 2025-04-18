@@ -25,7 +25,12 @@
   overflow: hidden;
   border: none;
   z-index: 1;
+  transition: all 0.25s ease;
   outline: none;
+}
+
+.content:active {
+  transform: scale(0.98);
 }
 
 .card::before {

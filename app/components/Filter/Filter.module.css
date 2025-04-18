@@ -44,17 +44,22 @@
 }
 
 .filterContent {
-  display: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
   padding: 10px;
   background-color: #fff;
   border: 1px solid #eee;
   margin-top: 10px;
   border-radius: 8px;
   position: relative;
+  transition: all 0.25s ease-in-out;
 }
 
 .filterContent.open {
-  display: block;
+  max-height: 1000px;
+  opacity: 1;
+  transition: all 0.25s ease-in-out;
 }
 
 .filterSection {
@@ -82,7 +87,8 @@
 
 .mobileResetButton {
   display: block;
-  float: right;
+  position: absolute;
+  right: 8px;
   color: var(--primary-color);
   padding: 8px;
   font-size: 14px;
@@ -125,6 +131,8 @@
 
   .filterContent {
     display: block !important;
+    max-height: none !important;
+    opacity: 1 !important;
     background: none;
     border: none;
     padding: 0;
