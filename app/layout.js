@@ -11,7 +11,10 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "Medcare",
+  title: {
+    default: "Medcare",
+    template: "%s | Medcare",
+  },
   description: "Health in Your Hands.",
 };
 

@@ -1,9 +1,10 @@
-"use client";
-
-import React from "react";
 import styles from "./styles.module.css";
 import { AlertCircle, Heart } from "lucide-react";
 import ContactCard from "../components/ContactCard/ContactCard";
+
+export const metadata = {
+  title: "Emergency"
+};
 
 export default function EmergencyContact() {
   const emergencyServices = [
