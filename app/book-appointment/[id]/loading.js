@@ -1,8 +1,8 @@
 import ScheduleAppointment from "@/app/components/ScheduleAppointment/ScheduleAppointment";
 import styles from "./styles.module.css";
+import LoadingSpinner from "@/app/components/LoadingSpinner/LoadingSpinner";
 
-const Appointments = async ({ params }) => {
-  const { id } = await params;
+const Loading = () => {
   return (
     <div>
       <div className={styles.appointments}>
@@ -14,11 +14,11 @@ const Appointments = async ({ params }) => {
           </p>
         </div>
         <div className={styles.right}>
-          <ScheduleAppointment doctorId={id} />
+          <LoadingSpinner />
         </div>
       </div>
     </div>
   );
 };
 
-export default Appointments;
+export default Loading;

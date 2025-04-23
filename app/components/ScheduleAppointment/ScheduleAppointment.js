@@ -165,99 +165,95 @@ const ScheduleAppointment = ({ doctorId }) => {
   };
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <h2 className={styles.title}>Schedule Appointment</h2>
-          <button className={styles.bookButton} onClick={handleNext}>
-            Book Appointment
-          </button>
-        </div>
-
-        <div className={styles.tabContainer}>
-          <button
-            className={`${styles.tab} ${
-              activeTab === "video" ? styles.activeTab : ""
-            }`}
-            onClick={() => handleTabClick("video")}
-          >
-            Book Video Consult
-          </button>
-          <button
-            className={`${styles.tab} ${
-              activeTab === "hospital" ? styles.activeTab : ""
-            }`}
-            onClick={() => handleTabClick("hospital")}
-          >
-            Book Hospital Visit
-          </button>
-        </div>
-
-        <div className={styles.dropdownWrapper}>
-          <select
-            className={styles.dropdown}
-            value={selectedOption}
-            onChange={(e) => setSelectedOption(e.target.value)}
-          >
-            {doctorLocation && (
-              <option value={doctorId}>{doctorLocation}</option>
-            )}
-          </select>
-          <ChevronDown className={styles.icon} size={28} />
-        </div>
-
-        <div className={styles.dateHeader}>
-          <button
-            className={styles.dateButton}
-            onClick={() => changeMonth(-1)}
-            disabled={date.getMonth() === new Date().getMonth()}
-          >
-            <CircleChevronLeft size={28} className={styles.icon} />
-          </button>
-          <h3 className={styles.heading}>
-            {date.toLocaleString("default", { month: "long" })}{" "}
-            {date.getFullYear()}
-          </h3>
-          <button className={styles.dateButton} onClick={() => changeMonth(1)}>
-            <CircleChevronRight size={28} className={styles.icon} />
-          </button>
-        </div>
-
-        <DateScroller
-          dates={dates}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-
-        {loading && <LoadingSpinner />}
-        {error && <p className={styles.error}>{error}</p>}
-
-        {slotError && <p className={styles.error}>{slotError}</p>}
-
-        {!loading && !error && (
-          <>
-            <TimeSlotSection
-              title="Morning"
-              icon="Sun"
-              slots={morningSlots}
-              selectedSlot={selectedSlot}
-              setSelectedSlot={setSelectedSlot}
-            />
-            <TimeSlotSection
-              title="Afternoon"
-              icon="Sunset"
-              slots={afternoonSlots}
-              selectedSlot={selectedSlot}
-              setSelectedSlot={setSelectedSlot}
-            />
-          </>
-        )}
-
-        <button className={styles.nextButton} onClick={handleNext}>
-          Next
+    <div className={styles.container}>
+      <div className={styles.box}>
+        <h2 className={styles.title}>Schedule Appointment</h2>
+        <button className={styles.bookButton} onClick={handleNext}>
+          Book Appointment
         </button>
       </div>
-    </Suspense>
+
+      <div className={styles.tabContainer}>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "video" ? styles.activeTab : ""
+          }`}
+          onClick={() => handleTabClick("video")}
+        >
+          Book Video Consult
+        </button>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "hospital" ? styles.activeTab : ""
+          }`}
+          onClick={() => handleTabClick("hospital")}
+        >
+          Book Hospital Visit
+        </button>
+      </div>
+
+      <div className={styles.dropdownWrapper}>
+        <select
+          className={styles.dropdown}
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          {doctorLocation && <option value={doctorId}>{doctorLocation}</option>}
+        </select>
+        <ChevronDown className={styles.icon} size={28} />
+      </div>
+
+      <div className={styles.dateHeader}>
+        <button
+          className={styles.dateButton}
+          onClick={() => changeMonth(-1)}
+          disabled={date.getMonth() === new Date().getMonth()}
+        >
+          <CircleChevronLeft size={28} className={styles.icon} />
+        </button>
+        <h3 className={styles.heading}>
+          {date.toLocaleString("default", { month: "long" })}{" "}
+          {date.getFullYear()}
+        </h3>
+        <button className={styles.dateButton} onClick={() => changeMonth(1)}>
+          <CircleChevronRight size={28} className={styles.icon} />
+        </button>
+      </div>
+
+      <DateScroller
+        dates={dates}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+
+      {loading && <LoadingSpinner />}
+      {error && <p className={styles.error}>{error}</p>}
+
+      {slotError && <p className={styles.error}>{slotError}</p>}
+
+      {!loading && !error && (
+        <>
+          <TimeSlotSection
+            title="Morning"
+            icon="Sun"
+            slots={morningSlots}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
+          <TimeSlotSection
+            title="Afternoon"
+            icon="Sunset"
+            slots={afternoonSlots}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
+        </>
+      )}
+
+      <button className={styles.nextButton} onClick={handleNext}>
+        Next
+      </button>
+    </div>
   );
 };
 
