@@ -27,7 +27,16 @@ export default async function sitemap() {
 
   return [
     {
-      url: `${baseUrl}/emergency`,
+      url: `${siteUrl}`,
+    },
+    {
+      url: `${siteUrl}/appointments`,
+    },
+    {
+      url: `${siteUrl}/reviews`,
+    },
+    {
+      url: `${siteUrl}/emergency`,
     },
     ...doctorEnteries,
   ];

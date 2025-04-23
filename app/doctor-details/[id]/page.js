@@ -1,125 +1,70 @@
-"use client";
+import DoctorDetails from "@/app/components/DoctorDetails/DoctorDetails";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import styles from "./styles.module.css";
-import DoctorReviews from "@/app/components/DoctorReviews/DoctorReviews";
-import Image from "next/image";
-import {
-  BookA,
-  Clock,
-  GraduationCap,
-  MapPin,
-  Stethoscope,
-  StickyNote,
-  Tag,
-} from "lucide-react";
-import LoadingSpinner from "@/app/components/LoadingSpinner/LoadingSpinner";
+export async function generateStaticParams() {
+  const allDoctors = [];
+  let page = 1;
+  let hasMore = true;
 
-const DoctorDetails = () => {
-  const { id } = useParams();
-  const router = useRouter();
-  const [doctor, setDoctor] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchDoctorDetails = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${id}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch doctor details");
-        const data = await res.json();
-        setDoctor(data.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDoctorDetails();
-  }, [id]);
-
-  if (loading)
-    return (
-      <div className={styles.loadingContainer}>
-        <LoadingSpinner />
-      </div>
+  while (hasMore) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/filter?page=${page}`
     );
-  if (error) return <p className={styles.error}>Error: {error}</p>;
-  if (!doctor) return <p className={styles.error}>Doctor not found</p>;
+    const result = await res.json();
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.buttonContainer}>
-        <button
-          className={styles.desktopBookButton}
-          onClick={() => router.push(`/book-appointment/${id}`)}
-        >
-          Book Appointment
-        </button>
-      </div>
-      <div className={styles.subContainer}>
-        <div className={styles.left}>
-          <Image
-            src={doctor.photo_path}
-            alt={doctor.name}
-            width={150}
-            height={150}
-            className={styles.profileImage}
-          />
-        </div>
-        <div className={styles.right}>
-          <h2 className={styles.name}>{doctor.name}</h2>
+    if (result?.data?.length > 0) {
+      allDoctors.push(...result.data);
+      const totalPages = result.pagination?.pages || 1;
+      page++;
+      hasMore = page <= totalPages;
+    } else {
+      hasMore = false;
+    }
+  }
 
-          <div className={styles.details}>
-            <span className={styles.detail}>
-              <Stethoscope className={styles.icon} /> {doctor.specialty}
-            </span>
-            <span className={styles.detail}>
-              <Clock className={styles.icon} /> {doctor.experience} Years
-            </span>
-          </div>
+  return allDoctors.map((doctor) => ({
+    id: doctor.id.toString(),
+  }));
+}
 
-          <p className={styles.detail}>
-            <MapPin className={styles.icon} /> {doctor.location}
-          </p>
-          <p className={styles.detail}>
-            <Tag className={styles.icon} /> ₹{doctor.consultation_fee}
-          </p>
-
-          {doctor.education ? (
-            <p className={styles.detail}>
-              <GraduationCap className={styles.icon} /> {doctor.education}
-            </p>
-          ) : null}
-          {doctor.bio ? (
-            <p className={styles.detail}>
-              <StickyNote className={styles.icon} /> {doctor.bio}
-            </p>
-          ) : null}
-          {doctor.languages && doctor.languages.length > 0 ? (
-            <p className={styles.detail}>
-              <BookA className={styles.icon} /> {doctor.languages.join(", ")}
-            </p>
-          ) : null}
-
-          <button
-            className={styles.bookButton}
-            onClick={() => router.push(`/book-appointment/${id}`)}
-          >
-            Book Appointment
-          </button>
-
-          <DoctorReviews />
-        </div>
-      </div>
-    </div>
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${id}`,
+    { next: { revalidate: 3600 } }
   );
+  const data = await res.json();
+  const doctor = data.data;
+
+  if (!doctor) {
+    return {
+      title: "Doctor Details | MedCare",
+      description: "Find doctor information on MedCare.",
+    };
+  }
+
+  return {
+    title: `${doctor.name} | ${doctor.specialty}`,
+    description:
+      doctor.bio ||
+      `Book an appointment with ${doctor.name}, ${doctor.specialty}.`,
+    openGraph: {
+      title: `${doctor.name} | ${doctor.specialty} | MedCare`,
+      description: doctor.bio || `Book an appointment with ${doctor.name}`,
+      images: [doctor.photo_path],
+    },
+  };
+}
+
+const DoctorDetailsPage = async ({ params }) => {
+  const { id } = await params;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/doctors/${id}`,
+    { next: { revalidate: 3600 } }
+  );
+  const data = await res.json();
+  const doctor = data.data;
+
+  return <DoctorDetails doctor={doctor} />;
 };
 
-export default DoctorDetails;
+export default DoctorDetailsPage;
