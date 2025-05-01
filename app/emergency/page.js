@@ -1,9 +1,19 @@
 import styles from "./styles.module.css";
 import { AlertCircle, Heart } from "lucide-react";
 import ContactCard from "../components/ContactCard/ContactCard";
-
 export const metadata = {
-  title: "Emergency"
+  title: "Emergency",
+  description:
+    "Get immediate medical assistance. Medcare provides 24/7 emergency support and connects you with nearby hospitals and doctors.",
+  keywords: [
+    "emergency medical help",
+    "24/7 doctor support",
+    "urgent care",
+    "emergency healthcare",
+    "emergency services near me",
+    "online emergency consultation",
+    "hospital emergency contact",
+  ],
 };
 
 export default function EmergencyContact() {

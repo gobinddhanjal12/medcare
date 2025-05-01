@@ -15,7 +15,18 @@ export const metadata = {
     default: "Medcare",
     template: "%s | Medcare",
   },
-  description: "Health in Your Hands.",
+  description:
+    "Medcare connects you with trusted doctors and healthcare professionals for easy online appointments and expert care.",
+  keywords: [
+    "online doctor booking",
+    "find doctors near me",
+    "healthcare services",
+    "virtual doctor consultation",
+    "book medical appointments",
+    "clinic appointment system",
+    "medical experts online",
+    "healthcare booking website",
+  ],
 };
 
 export default function RootLayout({ children }) {

@@ -47,6 +47,14 @@ export async function generateMetadata({ params }) {
     description:
       doctor.bio ||
       `Book an appointment with ${doctor.name}, ${doctor.specialty}.`,
+    keywords: [
+      doctor.name,
+      doctor.specialty,
+      "doctors",
+      "healthcare",
+      "medical services",
+      "book appointment",
+    ],
     openGraph: {
       title: `${doctor.name} | ${doctor.specialty} | MedCare`,
       description: doctor.bio || `Book an appointment with ${doctor.name}`,
