@@ -108,7 +108,10 @@
 }
 
 .error {
-  color: #ff0000;
+  background: #ffabab65;
+  padding: 10px;
+  border-radius: 10px;
+  color: #e10000;
   font-size: 14px;
   margin-top: 5px;
 }

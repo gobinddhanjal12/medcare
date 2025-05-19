@@ -5,6 +5,7 @@ import styles from "./signup.module.css";
 import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { MdErrorOutline } from "react-icons/md";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -43,6 +44,25 @@ export default function Signup() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+
+    const nameRegex = /^(?! )[A-Za-z]+(?: [A-Za-z]+)*(?<! )$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!nameRegex.test(name)) {
+      setError(
+        "Name must contain only letters and spaces, and not start or end with spaces."
+      );
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 8 characters, including uppercase, lowercase, number, and special character."
+      );
+      return;
+    }
+
     setLoading(true);
 
     const userData = {
@@ -67,7 +87,7 @@ export default function Signup() {
         setSuccess("Signup successful! Redirecting...");
         setTimeout(() => {
           window.location.href = "/login";
-        }, 2000);
+        }, 1000);
       } else {
         setError(data.message || "Signup failed. Please try again.");
       }
