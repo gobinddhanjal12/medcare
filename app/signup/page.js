@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./signup.module.css";
 import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { MdErrorOutline } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -16,29 +16,9 @@ export default function Signup() {
   const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-
-    if (token) {
-      localStorage.setItem("token", token);
-
-      fetch(`${API_BASE_URL}/auth/me`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            localStorage.setItem("user", JSON.stringify(data));
-          }
-          window.location.href = "/appointments";
-        })
-        .catch(() => (window.location.href = "/appointments"));
-    }
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,8 +66,8 @@ export default function Signup() {
       if (response.ok) {
         setSuccess("Signup successful! Redirecting...");
         setTimeout(() => {
-          window.location.href = "/login";
-        }, 1000);
+          router.push("/login");
+        }, 500);
       } else {
         setError(data.message || "Signup failed. Please try again.");
       }

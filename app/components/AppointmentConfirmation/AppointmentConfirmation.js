@@ -9,7 +9,6 @@ import {
   MapPin,
   User,
   Mail,
-  DollarSign,
   CheckCircle,
   AlertCircle,
   Home,
@@ -35,18 +34,14 @@ const AppointmentConfirmation = () => {
       setError(null);
 
       try {
-        const token = localStorage.getItem("token");
-        if (!token)
-          throw new Error("Authentication token not found. Please log in.");
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments/${appointmentId}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
+            credentials: "include",
           }
         );
 

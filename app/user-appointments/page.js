@@ -19,19 +19,14 @@ const UserAppointments = () => {
         setLoading(true);
         setError("");
 
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found. Please log in.");
-        }
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments/patient?page=${page}&limit=${limit}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
+            credentials: "include",
           }
         );
 

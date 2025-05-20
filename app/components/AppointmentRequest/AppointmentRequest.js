@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { MdSchedule } from "react-icons/md";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const AppointmentRequest = () => {
   const searchParams = useSearchParams();
@@ -35,6 +36,15 @@ const AppointmentRequest = () => {
     setTimeSlotId(searchParams.get("timeSlotId") || "");
     setConsultationType(searchParams.get("mode") || "");
   }, [searchParams]);
+
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      const currentUrl = `/appointment-request?${searchParams.toString()}`;
+      router.push(`/login?redirectTo=${encodeURIComponent(currentUrl)}`);
+    }
+  }, [authLoading, user, searchParams]);
 
   useEffect(() => {
     const fetchDoctorDetails = async () => {
@@ -61,23 +71,14 @@ const AppointmentRequest = () => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        router.replace(
-          `/login?redirect=${encodeURIComponent(window.location.href)}`
-        );
-        return;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/appointments`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
           body: JSON.stringify({
             doctor_id: Number(doctorId),
             appointment_date: date,
@@ -105,6 +106,14 @@ const AppointmentRequest = () => {
     const ampm = hour >= 12 ? "PM" : "AM";
     hour = hour % 12 || 12;
     return `${hour}:${minute} ${ampm}`;
+  }
+
+  if (authLoading || !user) {
+    return (
+      <div className={styles.loadingContainer}>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (

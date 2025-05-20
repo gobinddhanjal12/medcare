@@ -1,68 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { user, logout, loading } = useAuth();
 
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        setLoading(true);
-        setError("");
-
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found. Please log in.");
-        }
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/me`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch user data");
-        }
-
-        setUser(data.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
+    logout();
+    router.push("/login");
   };
 
-  if (loading)
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [loading,user]);
+
+  if (loading || !user) {
     return (
       <div className={styles.loadingContainer}>
         <LoadingSpinner />
       </div>
     );
-  if (error) return <p className={styles.error}>{error}</p>;
+  }
 
   return (
     <div className={styles.container}>

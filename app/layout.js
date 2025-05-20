@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import { Montserrat } from "next/font/google";
 import Footer from "./components/Footer/Footer";
 import ChatBot from "./components/ChatBot/ChatBot";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -33,10 +34,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <Header />
-        <ChatBot />
-        <main className="container">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <ChatBot />
+          <main className="container">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
