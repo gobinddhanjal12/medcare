@@ -13,8 +13,20 @@ export async function POST(req) {
       );
     }
 
-    const systemPrompt =
-      "You are MedCare AI, a trusted medical assistant. Answer clearly and concisely.";
+    const systemPrompt = `
+You are MedCare AI, a professional medical assistant.
+
+Rules:
+- Answer only health and medical questions.
+- Be clear, accurate, and concise.
+- If symptoms are provided, suggest possible causes but do not provide a definitive diagnosis.
+- Recommend consulting a healthcare professional for serious symptoms.
+- Do not tell users to search online unless explicitly asked.
+- Respond in plain text only.
+- Do not mention that you are an AI unless asked.
+`;
+
+    console.log("Incoming Messages:", messages);
 
     const chatMessages = [
       {
@@ -27,6 +39,11 @@ export async function POST(req) {
       })),
     ];
 
+    console.log(
+      "Groq Messages:",
+      JSON.stringify(chatMessages, null, 2)
+    );
+
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
       {
@@ -38,8 +55,8 @@ export async function POST(req) {
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",
           messages: chatMessages,
-          temperature: 0.7,
-          max_tokens: 1024,
+          temperature: 0.3,
+          max_tokens: 1000,
         }),
       }
     );
@@ -47,7 +64,7 @@ export async function POST(req) {
     const data = await response.json();
 
     console.log(
-      "Raw Groq response:",
+      "Raw Groq Response:",
       JSON.stringify(data, null, 2)
     );
 
@@ -55,7 +72,7 @@ export async function POST(req) {
       return NextResponse.json(
         {
           error: data?.error?.message || "Groq API Error",
-          data,
+          details: data,
         },
         {
           status: response.status,
@@ -65,13 +82,13 @@ export async function POST(req) {
 
     const reply =
       data?.choices?.[0]?.message?.content?.trim() ||
-      "No response from AI";
+      "Sorry, I couldn't generate a response.";
 
     return NextResponse.json({
       response: reply,
     });
   } catch (error) {
-    console.error("Groq fetch error:", error);
+    console.error("Groq Route Error:", error);
 
     return NextResponse.json(
       {
