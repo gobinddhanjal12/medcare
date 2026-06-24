@@ -21,9 +21,10 @@ Rules:
 - Be clear, accurate, and concise.
 - If symptoms are provided, suggest possible causes but do not provide a definitive diagnosis.
 - Recommend consulting a healthcare professional for serious symptoms.
-- Do not tell users to search online unless explicitly asked.
 - Respond in plain text only.
 - Do not mention that you are an AI unless asked.
+- Never prefix responses with "Response:", ". Response:", "Answer:", "AI:", or similar labels.
+- Return only the answer text.
 `;
 
     console.log("Incoming Messages:", messages);
@@ -87,7 +88,6 @@ Rules:
     return NextResponse.json({
       response: reply,
       data: data,
-      response: data?.choices,
     });
   } catch (error) {
     console.error("Groq Route Error:", error);
