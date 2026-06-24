@@ -86,6 +86,8 @@ Rules:
 
     return NextResponse.json({
       response: reply,
+      data: data,
+      response: data?.choices,
     });
   } catch (error) {
     console.error("Groq Route Error:", error);
