@@ -39,7 +39,7 @@ export async function POST(req) {
       data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ||
       "No response from Gemini";
 
-    return NextResponse.json({ response: reply });
+    return NextResponse.json({ response: reply, data: data });
   } catch (error) {
     console.error("Gemini fetch error:", error.message);
     return NextResponse.json(
